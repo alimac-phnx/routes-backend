@@ -6,7 +6,7 @@ namespace WebRoutes.Models
     {
         public int Id { get; set; }
         
-        public int RouteId { get; set; }
+        public int TripId { get; set; }
         
         public string Name { get; set; } = string.Empty;
         
@@ -15,6 +15,6 @@ namespace WebRoutes.Models
         public string Point { get; set; } = string.Empty;
 
         [JsonIgnore]
-        public ICollection<Route> Routes { get; set; } = new List<Route>();
+        public ICollection<Trip> Trips { get; set; } = new List<Trip>();
     }
 }

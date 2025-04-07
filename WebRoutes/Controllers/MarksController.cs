@@ -33,7 +33,7 @@ namespace WebRoutes.Controllers
         public async Task<ActionResult> CreateMark(Mark mark)
         {
             await _markService.CreateMarkAsync(mark);
-            return CreatedAtAction(nameof(GetMarksByRoute), new { routeId = mark.RouteId }, mark);
+            return CreatedAtAction(nameof(GetMarksByRoute), new { routeId = mark.TripId }, mark);
         }
 
         [HttpDelete("{userId}/{routeId}")]

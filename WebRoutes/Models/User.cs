@@ -15,7 +15,7 @@ namespace WebRoutes.Models
         public string? SecondName { get; set; }
 
         [JsonIgnore]
-        public ICollection<Route> Routes { get; set; } = new List<Route>();
+        public ICollection<Trip> Trips { get; set; } = new List<Trip>();
 
         [JsonIgnore]
         public ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();

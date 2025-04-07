@@ -4,15 +4,32 @@ using WebRoutes.Infrastructure;
 using WebRoutes.Mappers;
 using WebRoutes.Models;
 using WebRoutes.Repositories;
+using WebRoutes.Repositories.implementation;
 using WebRoutes.Services;
-using Route = WebRoutes.Models.Route;
+using WebRoutes.Services.implementation;
+using WebRoutes.Infrastructure.TestDataConfig;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+        .UseSeeding((context, _) =>
+        {
+            if (context is ApplicationDbContext dbContext)
+            {
+                FakeDataSeeder.SeedSync(dbContext);
+            }
+        })
+        .UseAsyncSeeding(async (context, _, cancellationToken) =>
+        {
+            if (context is ApplicationDbContext dbContext)
+            {
+                await FakeDataSeeder.SeedAsync(dbContext, cancellationToken);
+            }
+        });
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -24,10 +41,10 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddScoped<IRepository<Route>, Repository<Route>>();
+builder.Services.AddScoped<IRepository<Trip>, Repository<Trip>>();
 
-builder.Services.AddScoped<IRouteRepository, RouteRepository>();
-builder.Services.AddScoped<IRouteService, RouteService>();
+builder.Services.AddScoped<ITripRepository, TripRepository>();
+builder.Services.AddScoped<ITripService, TripService>();
 
 builder.Services.AddScoped<IBasePlaceRepository<Place>, BasePlaceRepository<Place>>();
 builder.Services.AddScoped<IPlaceService, PlaceService>();
