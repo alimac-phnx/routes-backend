@@ -10,7 +10,7 @@ namespace WebRoutes.Repositories.implementation
 
         public async Task<IEnumerable<Media>> GetMediaByReviewIdAsync(int reviewId)
         {
-            return await _context.Media
+            return await _context.Medias
                 .Where(m => m.ReviewId == reviewId)
                 .ToListAsync();
         }

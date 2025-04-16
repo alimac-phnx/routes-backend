@@ -1,37 +1,39 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebRoutes.Infrastructure;
 using WebRoutes.Models;
+using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Repositories.implementation
 {
-    public class TripRepository : Repository<Trip>, ITripRepository
+    public class RouteRepository : Repository<Route>, ITripRepository
     {
-        public TripRepository(ApplicationDbContext context) : base(context) { }
+        public RouteRepository(ApplicationDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Trip>> GetRoutesWithDetailsAsync()
+        public async Task<IEnumerable<Route>> GetRoutesWithDetailsAsync()
         {
-            return await _context.Trips
+            return await _context.Routes
                 .Include(r => r.User)
                 .Include(r => r.Places)
                 .Include(r => r.AdditionalPlaces)
                 .ToListAsync();
         }
 
-        public async Task UpdateRouteSimplifiedAsync(Trip trip)
+        public async Task UpdateRouteSimplifiedAsync(Route route)
         {
-            var existingRoute = await _context.Trips
+            var existingRoute = await _context.Routes
                 .Include(r => r.Places)
-                .FirstOrDefaultAsync(r => r.Id == trip.Id);
+                .Include(r => route.AdditionalPlaces)
+                .FirstOrDefaultAsync(r => r.Id == route.Id);
 
             if (existingRoute == null)
             {
                 throw new Exception("Маршрут не найден.");
             }
 
-            _context.Entry(existingRoute).CurrentValues.SetValues(trip);
+            _context.Entry(existingRoute).CurrentValues.SetValues(route);
 
-            var newPlaceIds = trip.Places.Select(p => p.Id).ToList();
-            var newAddPlaceIds = trip.AdditionalPlaces.Select(a => a.Id).ToList();
+            var newPlaceIds = route.Places.Select(p => p.Id).ToList();
+            var newAddPlaceIds = route.AdditionalPlaces.Select(a => a.Id).ToList();
 
             var placesToRemove = existingRoute.Places
                 .Where(p => !newPlaceIds.Contains(p.Id))

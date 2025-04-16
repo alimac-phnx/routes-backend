@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WebRoutes.Models;
 using WebRoutes.Repositories;
+using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Services.implementation
 {
@@ -16,25 +17,25 @@ namespace WebRoutes.Services.implementation
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Trip>> GetAllRoutesAsync()
+        public async Task<IEnumerable<Route>> GetAllRoutesAsync()
         {
             return await _tripRepository.GetRoutesWithDetailsAsync();
         }
 
-        public async Task<Trip?> GetRouteByIdAsync(int id)
+        public async Task<Route?> GetRouteByIdAsync(int id)
         {
             return await _tripRepository.GetByIdAsync(id);
         }
 
-        public async Task CreateRouteAsync(Trip trip)
+        public async Task CreateRouteAsync(Route route)
         {
-            await _tripRepository.AddAsync(trip);
+            await _tripRepository.AddAsync(route);
             await _tripRepository.SaveChangesAsync();
         }
 
-        public async Task UpdateRouteAsync(Trip trip)
+        public async Task UpdateRouteAsync(Route route)
         {
-            await _tripRepository.UpdateRouteSimplifiedAsync(trip);
+            await _tripRepository.UpdateRouteSimplifiedAsync(route);
             await _tripRepository.SaveChangesAsync();
         }
 

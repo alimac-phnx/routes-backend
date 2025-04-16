@@ -7,7 +7,7 @@ public static class UserFaker
 {
     private static int _id = 1;
 
-    public static List<User> GenerateMany(int count)
+    public static ICollection<User> GenerateMany(int count)
     {
         return new Faker<User>()
             .RuleFor(u => u.Id, _ => _id++)

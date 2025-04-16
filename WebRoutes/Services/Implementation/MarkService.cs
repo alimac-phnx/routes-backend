@@ -31,7 +31,7 @@ namespace WebRoutes.Services.implementation
         public async Task DeleteMarkAsync(int userId, int routeId)
         {
             var marks = await _markRepository.GetMarksByUserIdAsync(userId);
-            var markToDelete = marks.FirstOrDefault(m => m.TripId == routeId);
+            var markToDelete = marks.FirstOrDefault(m => m.RouteId == routeId);
             if (markToDelete != null)
             {
                 _markRepository.Delete(markToDelete);

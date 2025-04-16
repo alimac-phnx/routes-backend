@@ -4,7 +4,7 @@ using WebRoutes.Models;
 
 namespace WebRoutes.Repositories.implementation
 {
-    public class BasePlaceRepository<T> : IBasePlaceRepository<T> where T : BasePlace
+    public class BasePlaceRepository<T> : IBasePlaceRepository<T> where T : Location
     {
         protected readonly ApplicationDbContext _context;
 

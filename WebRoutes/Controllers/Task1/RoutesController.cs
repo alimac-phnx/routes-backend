@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebRoutes.Models;
 using WebRoutes.Services;
+using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Controllers.Task1
 {
@@ -16,14 +17,14 @@ namespace WebRoutes.Controllers.Task1
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Trip>>> GetRoutes()
+        public async Task<ActionResult<IEnumerable<Route>>> GetRoutes()
         {
             var routes = await _tripService.GetAllRoutesAsync();
             return Ok(routes);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Trip>> GetRoute(int id)
+        public async Task<ActionResult<Route>> GetRoute(int id)
         {
             var route = await _tripService.GetRouteByIdAsync(id);
             if (route == null)
@@ -34,21 +35,21 @@ namespace WebRoutes.Controllers.Task1
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateRoute(Trip trip)
+        public async Task<ActionResult> CreateRoute(Route route)
         {
-            await _tripService.CreateRouteAsync(trip);
-            return CreatedAtAction(nameof(GetRoute), new { id = trip.Id }, trip);
+            await _tripService.CreateRouteAsync(route);
+            return CreatedAtAction(nameof(GetRoute), new { id = route.Id }, route);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateRoute(int id, Trip trip)
+        public async Task<ActionResult> UpdateRoute(int id, Route route)
         {
-            if (id != trip.Id)
+            if (id != route.Id)
             {
                 return BadRequest();
             }
 
-            await _tripService.UpdateRouteAsync(trip);
+            await _tripService.UpdateRouteAsync(route);
             return NoContent();
         }
 

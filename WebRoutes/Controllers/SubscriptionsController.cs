@@ -30,10 +30,10 @@ namespace WebRoutes.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateSubscription(Subscription subscription)
+        public async Task<ActionResult> CreateSubscriptionAsync(Subscription subscription)
         {
             await _subscriptionService.CreateSubscriptionAsync(subscription);
-            return CreatedAtAction(nameof(GetSubscriptions), new { userId = subscription.UserId }, subscription);
+            return CreatedAtAction(nameof(GetSubscriptions), new { userId = subscription.SubscriberId }, subscription);
         }
 
         [HttpDelete("{userId}/{followedUserId}")]

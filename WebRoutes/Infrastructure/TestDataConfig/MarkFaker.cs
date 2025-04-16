@@ -1,6 +1,7 @@
 ﻿using Bogus;
 using WebRoutes.Enums;
 using WebRoutes.Models;
+using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Infrastructure.TestDataConfig;
 
@@ -8,12 +9,12 @@ public static class MarkFaker
 {
     private static int _id = 1;
 
-    public static List<Mark> GenerateMany(int count, List<User> users, List<Trip> routes)
+    public static ICollection<Mark> GenerateMany(int count, ICollection<User> users, ICollection<Route> routes)
     {
         return new Faker<Mark>()
-            .RuleFor(m => m.Id, _ => _id++)
-            .RuleFor(m => m.UserId, f => f.PickRandom(users).Id)
-            .RuleFor(m => m.TripId, f => f.PickRandom(routes).Id)
+            .RuleFor(m => m.Id, f => f.IndexFaker + 1)
+            .RuleFor(m => m.UserId, f => f.IndexFaker + 1)
+            .RuleFor(m => m.RouteId, f => f.IndexFaker + 1)
             .RuleFor(m => m.MarkType, f => f.PickRandom<MarkType>())
             .Generate(count);
     }

@@ -1,18 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebRoutes.Infrastructure.TestDataConfig;
 using WebRoutes.Models;
+using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Infrastructure
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<Trip> Trips { get; set; }
-        public DbSet<Media> Media { get; set; }
+        public DbSet<Route> Routes { get; set; }
+        
+        public DbSet<Media> Medias { get; set; }
+        
         public DbSet<Mark> Marks { get; set; }
+        
         public DbSet<User> Users { get; set; }
+        
         public DbSet<Review> Reviews { get; set; }
+        
+        public DbSet<Point> Points { get; set; }
+        
         public DbSet<Place> Places { get; set; }
-        public DbSet<AdditionalPlace> AddPlaces { get; set; }
+        
+        public DbSet<AdditionalPlace> AdditionalPlaces { get; set; }
+        
         public DbSet<Subscription> Subscriptions { get; set; }
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

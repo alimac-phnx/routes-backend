@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using WebRoutes.Models;
+using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Infrastructure.TestDataConfig;
 
@@ -10,9 +11,7 @@ namespace WebRoutes.Infrastructure.TestDataConfig;
 */
 public static class PlaceFaker
 {
-    private static int _id = 1;
-
-    public static List<Place> GenerateMany(int count, List<Trip> routes)
+    public static ICollection<Place> GenerateMany(int count, ICollection<Point> points)
     {
         var randomOrders = Enumerable.Range(1, count)
             .OrderBy(x => Guid.NewGuid()) // Перемешиваем числа
@@ -20,11 +19,10 @@ public static class PlaceFaker
         int orderIndex = 0;
         
         return new Faker<Place>()
-            .RuleFor(p => p.Id, _ => _id++)
-            .RuleFor(p => p.TripId, f => f.PickRandom(routes).Id)
+            .RuleFor(p => p.Id, f => f.IndexFaker + 1)
             .RuleFor(p => p.Name, f => f.Address.City())
             .RuleFor(p => p.Description, f => f.Lorem.Sentence())
-            .RuleFor(p => p.Point, f => $"{f.Address.Latitude()},{f.Address.Longitude()}")
+            .RuleFor(p => p.PointId, f => points.Single(s => s.LocationId == f.IndexFaker + 1).Id)
             .FinishWith((f, p) => 
             {
                 p.OrderOfVisit = randomOrders[orderIndex];

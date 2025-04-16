@@ -1,9 +1,8 @@
 ﻿using WebRoutes.Enums;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebRoutes.Models
 {
-    public class Trip
+    public class Route
     {
         public int Id { get; set; }
 
@@ -11,11 +10,11 @@ namespace WebRoutes.Models
 
         public User User { get; set; } = null!;
 
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
 
         public RouteType Type { get; set; }
         
-        public string Theme { get; set; } = string.Empty;
+        public string Theme { get; set; }
         
         public string? Description { get; set; }
         
@@ -27,12 +26,10 @@ namespace WebRoutes.Models
         
         public float Rating { get; set; }
         
-        public string ListOfPoints { get; set; } = string.Empty;
-        
         public DateTime DateUploaded { get; set; }
 
-        public ICollection<Place> Places { get; set; } = new List<Place>();
+        public ICollection<Place> Places { get; set; }
         
-        public ICollection<AdditionalPlace> AdditionalPlaces { get; set; } = new List<AdditionalPlace>();
+        public ICollection<AdditionalPlace> AdditionalPlaces { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace WebRoutes.Repositories
 {
-    public interface IBasePlaceRepository<T> where T : BasePlace
+    public interface IBasePlaceRepository<T> where T : Location
     {
         Task<IEnumerable<T>> GetAllAsync();
 

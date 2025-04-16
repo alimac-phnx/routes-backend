@@ -8,16 +8,20 @@ public class SubscriptionConfiguration : IEntityTypeConfiguration<Subscription>
 {
     public void Configure(EntityTypeBuilder<Subscription> builder)
     {
-        builder.HasKey(s => new { s.UserId, s.FollowedUserId });
-
-        builder.HasOne<User>(s => s.User)
+        builder
+            .HasIndex(s => new { s.SubscriberId, s.FolloweeId })
+            .IsUnique();
+        
+        builder
+            .HasOne(s => s.Subscriber)
             .WithMany(u => u.Subscriptions)
-            .HasForeignKey(s => s.UserId)
+            .HasForeignKey(s => s.SubscriberId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne<User>(s => s.FollowedUser)
+        builder
+            .HasOne(s => s.Followee)
             .WithMany()
-            .HasForeignKey(s => s.FollowedUserId)
+            .HasForeignKey(s => s.FolloweeId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

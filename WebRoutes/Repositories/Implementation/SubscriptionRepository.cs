@@ -12,7 +12,7 @@ namespace WebRoutes.Repositories.implementation
         {
             return await _context.Subscriptions
                 .AsNoTracking()
-                .Where(s => s.UserId == userId)
+                .Where(s => s.SubscriberId == userId)
                 .ToListAsync();
         }
 
@@ -20,13 +20,20 @@ namespace WebRoutes.Repositories.implementation
         {
             return await _context.Subscriptions
                 .AsNoTracking()
-                .Where(s => s.FollowedUserId == userId)
+                .Where(s => s.FolloweeId == userId)
                 .ToListAsync();
         }
 
         public async Task AddSubscriptionAsync(Subscription subscription)
         {
             await _context.Subscriptions.AddAsync(subscription);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveSubscriptionAsync(Subscription subscription)
+        {
+            _context.Subscriptions.Remove(subscription);
+            await _context.SaveChangesAsync();
         }
     }
 }

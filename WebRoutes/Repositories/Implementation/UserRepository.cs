@@ -11,7 +11,7 @@ namespace WebRoutes.Repositories.implementation
         public async Task<User?> GetUserWithRoutesAsync(int id)
         {
             return await _context.Users
-                .Include(u => u.Trips)
+                .Include(u => u.Routes)
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
     }

@@ -2,12 +2,14 @@
 {
     public class Subscription
     {
-        public int UserId { get; set; }
-
-        public User User { get; set; }
-
-        public User FollowedUser { get; set; }
-
-        public int FollowedUserId { get; set; }
+        public int Id { get; set; }
+    
+        public int SubscriberId { get; set; }
+        
+        public User? Subscriber { get; set; }
+    
+        public int FolloweeId { get; set; }
+        
+        public User? Followee { get; set; }
     }
 }

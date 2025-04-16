@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WebRoutes.Dtos;
 using WebRoutes.Models;
+using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Mappers
 {
@@ -8,7 +9,7 @@ namespace WebRoutes.Mappers
     {
         public MappingProfile()
         {
-            CreateMap<Trip, RouteDto>().ReverseMap();
+            CreateMap<Route, RouteDto>().ReverseMap();
 
             CreateMap<User, UserDto>().ReverseMap();
         }

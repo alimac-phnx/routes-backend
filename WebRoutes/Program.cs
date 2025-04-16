@@ -8,6 +8,7 @@ using WebRoutes.Repositories.implementation;
 using WebRoutes.Services;
 using WebRoutes.Services.implementation;
 using WebRoutes.Infrastructure.TestDataConfig;
+using Route = WebRoutes.Models.Route;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,9 +42,9 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddScoped<IRepository<Trip>, Repository<Trip>>();
+builder.Services.AddScoped<IRepository<Route>, Repository<Route>>();
 
-builder.Services.AddScoped<ITripRepository, TripRepository>();
+builder.Services.AddScoped<ITripRepository, RouteRepository>();
 builder.Services.AddScoped<ITripService, TripService>();
 
 builder.Services.AddScoped<IBasePlaceRepository<Place>, BasePlaceRepository<Place>>();

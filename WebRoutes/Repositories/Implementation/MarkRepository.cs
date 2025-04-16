@@ -18,7 +18,7 @@ namespace WebRoutes.Repositories.implementation
         public async Task<IEnumerable<Mark>> GetMarksByRouteIdAsync(int routeId)
         {
             return await _context.Marks
-                .Where(m => m.TripId == routeId)
+                .Where(m => m.RouteId == routeId)
                 .ToListAsync();
         }
     }

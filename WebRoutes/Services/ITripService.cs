@@ -1,16 +1,17 @@
 ﻿using WebRoutes.Models;
+using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Services
 {
     public interface ITripService
     {
-        Task<IEnumerable<Trip>> GetAllRoutesAsync();
+        Task<IEnumerable<Route>> GetAllRoutesAsync();
         
-        Task<Models.Trip?> GetRouteByIdAsync(int id);
+        Task<Models.Route?> GetRouteByIdAsync(int id);
         
-        Task CreateRouteAsync(Trip trip);
+        Task CreateRouteAsync(Route route);
         
-        Task UpdateRouteAsync(Trip trip);
+        Task UpdateRouteAsync(Route route);
         
         Task DeleteRouteAsync(int id);
     }

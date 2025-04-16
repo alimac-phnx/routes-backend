@@ -5,26 +5,29 @@ namespace WebRoutes.Infrastructure.TestDataConfig;
 
 public static class SubscriptionFaker
 {
-    public static List<Subscription> GenerateMany(int count, List<User> users)
+    public static ICollection<Subscription> GenerateMany(int count, ICollection<User> users)
     {
-        var subs = new List<Subscription>();
-        var faker = new Faker();
-
-        for (int i = 0; i < count; i++)
-        {
-            var user = faker.PickRandom(users);
-            var followed = faker.PickRandom(users.Where(u => u.Id != user.Id));
-            
-            if (!subs.Any(s => s.UserId == user.Id && s.FollowedUserId == followed.Id))
+        var subscriptions = new HashSet<(int SubscriberId, int FolloweeId)>();
+        
+        return new Faker<Subscription>()
+            .CustomInstantiator(f =>
             {
-                subs.Add(new Subscription
+                int subscriberId, followeeId;
+                
+                do
                 {
-                    UserId = user.Id,
-                    FollowedUserId = followed.Id
-                });
-            }
-        }
+                    subscriberId = f.PickRandom(users).Id;
+                    followeeId = f.PickRandom(users).Id;
+                } while (subscriberId == followeeId || subscriptions.Contains((subscriberId, followeeId)));
 
-        return subs;
+                subscriptions.Add((subscriberId, followeeId));
+
+                return new Subscription
+                {
+                    SubscriberId = subscriberId,
+                    FolloweeId = followeeId,
+                };
+            })
+            .Generate(count);
     }
 }

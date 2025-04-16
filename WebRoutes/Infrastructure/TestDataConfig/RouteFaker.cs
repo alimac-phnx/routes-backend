@@ -1,16 +1,17 @@
 ﻿using Bogus;
 using WebRoutes.Enums;
 using WebRoutes.Models;
+using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Infrastructure.TestDataConfig;
 
-public static class TripFaker
+public static class RouteFaker
 {
     private static int _id = 1;
 
-    public static List<Trip> GenerateMany(int count, List<User> users)
+    public static ICollection<Route> GenerateMany(int count, ICollection<User> users)
     {
-        return new Faker<Trip>()
+        return new Faker<Route>()
             .RuleFor(r => r.Id, _ => _id++)
             .RuleFor(r => r.UserId, f => f.PickRandom(users).Id)
             .RuleFor(r => r.Name, f => f.Lorem.Sentence(2))
@@ -21,7 +22,6 @@ public static class TripFaker
             .RuleFor(r => r.Duration, f => TimeSpan.FromHours(f.Random.Double(0.5, 6)))
             .RuleFor(r => r.Difficulty, f => f.PickRandom<RouteDifficulty>())
             .RuleFor(r => r.Rating, f => f.Random.Float(1, 5))
-            .RuleFor(r => r.ListOfPoints, f => $"{f.Address.Latitude()},{f.Address.Longitude()}")
             .RuleFor(r => r.DateUploaded, f => f.Date.Past().ToUniversalTime())
             .Generate(count);
     }

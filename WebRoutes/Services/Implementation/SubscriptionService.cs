@@ -24,6 +24,13 @@ namespace WebRoutes.Services.implementation
 
         public async Task CreateSubscriptionAsync(Subscription subscription)
         {
+            var existingSubscription = await _subscriptionRepository
+                .GetSubscriptionsByUserIdAsync(subscription.SubscriberId);
+            if (existingSubscription.SingleOrDefault(s => s.FolloweeId == subscription.FolloweeId) != null || subscription.SubscriberId == subscription.FolloweeId)
+            {
+                return;
+            }
+            
             await _subscriptionRepository.AddSubscriptionAsync(subscription);
             await _subscriptionRepository.SaveChangesAsync();
         }
@@ -31,7 +38,7 @@ namespace WebRoutes.Services.implementation
         public async Task DeleteSubscriptionAsync(int userId, int followedUserId)
         {
             var subscription = await _subscriptionRepository.GetSubscriptionsByUserIdAsync(userId);
-            var subToDelete = subscription.FirstOrDefault(s => s.FollowedUserId == followedUserId);
+            var subToDelete = subscription.FirstOrDefault(s => s.FolloweeId == followedUserId);
             if (subToDelete != null)
             {
                 _subscriptionRepository.Delete(subToDelete);

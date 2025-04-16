@@ -16,7 +16,6 @@ namespace WebRoutes.Controllers
             _additionalPlaceService = additionalPlaceService;
         }
 
-        // Получение всех AdditionalPlace
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AdditionalPlace>>> GetAdditionalPlaces()
         {
@@ -24,7 +23,6 @@ namespace WebRoutes.Controllers
             return Ok(additionalPlaces);
         }
 
-        // Получение AdditionalPlace по типу
         [HttpGet("by-type/{type}")]
         public async Task<ActionResult<IEnumerable<AdditionalPlace>>> GetAdditionalPlacesByType(AdditionalPlaceType type)
         {
@@ -32,7 +30,6 @@ namespace WebRoutes.Controllers
             return Ok(additionalPlaces);
         }
 
-        // Получение конкретного AdditionalPlace по ID
         [HttpGet("{id}")]
         public async Task<ActionResult<AdditionalPlace>> GetAdditionalPlaceById(int id)
         {
@@ -44,7 +41,6 @@ namespace WebRoutes.Controllers
             return Ok(additionalPlace);
         }
 
-        // Создание нового AdditionalPlace
         [HttpPost]
         public async Task<ActionResult> CreateAdditionalPlace(AdditionalPlace additionalPlace)
         {
@@ -52,7 +48,6 @@ namespace WebRoutes.Controllers
             return CreatedAtAction(nameof(GetAdditionalPlaceById), new { id = additionalPlace.Id }, additionalPlace);
         }
 
-        // Обновление существующего AdditionalPlace
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAdditionalPlace(int id, AdditionalPlace additionalPlace)
         {
@@ -65,7 +60,6 @@ namespace WebRoutes.Controllers
             return NoContent();
         }
 
-        // Удаление AdditionalPlace
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAdditionalPlace(int id)
         {

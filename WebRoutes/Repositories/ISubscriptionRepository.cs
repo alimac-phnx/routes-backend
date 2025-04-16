@@ -9,5 +9,6 @@ namespace WebRoutes.Repositories
         Task<IEnumerable<Subscription>> GetFollowersByUserIdAsync(int userId);
 
         Task AddSubscriptionAsync(Subscription subscription);
+        Task RemoveSubscriptionAsync(Subscription subscription);
     }
 }
