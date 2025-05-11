@@ -3,7 +3,7 @@ using WebRoutes.Models;
 
 namespace WebRoutes.Dtos
 {
-    public class RouteDto
+    internal class RouteDto
     {
         public User User { get; set; }
 

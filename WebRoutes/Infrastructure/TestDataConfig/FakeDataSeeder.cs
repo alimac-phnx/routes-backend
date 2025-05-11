@@ -2,7 +2,7 @@
 
 namespace WebRoutes.Infrastructure.TestDataConfig;
 
-public static class FakeDataSeeder
+internal static class FakeDataSeeder
 {
    public static void SeedSync(ApplicationDbContext db)
     {
@@ -14,27 +14,38 @@ public static class FakeDataSeeder
 
         var routes = RouteFaker.GenerateMany(count, users);
         db.Routes.AddRange(routes);
+        routes.ToList().ForEach(p => Console.WriteLine($"routes: {p.Id}"));
         
-        var points = PointFaker.GenerateMany(count);
-        db.Points.AddRange(points);
+        var placePoints = PointFaker.GenerateMany(count);
+        db.Points.AddRange(placePoints);
+        placePoints.ToList().ForEach(p => Console.WriteLine(p.Id));
+        var additionalPlacePoints = PointFaker.GenerateMany(count);
+        db.Points.AddRange(additionalPlacePoints);
+        additionalPlacePoints.ToList().ForEach(p => Console.WriteLine(p.Id));
 
-        var places = PlaceFaker.GenerateMany(count, points);
+        var places = PlaceFaker.GenerateMany(count, placePoints);
         db.Places.AddRange(places);
-
-        var additionalPlaces = AdditionalPlaceFaker.GenerateMany(count, points);
+        places.ToList().ForEach(p => Console.WriteLine($"places: {p.Id} : routeID {p.RouteId}"));
+        
+        var additionalPlaces = AdditionalPlaceFaker.GenerateMany(count, additionalPlacePoints);
         db.AdditionalPlaces.AddRange(additionalPlaces);
+        additionalPlaces.ToList().ForEach(p => Console.WriteLine($"addplaces: {p.Id} : routeID {p.RouteId}"));
 
-        var reviews = ReviewFaker.GenerateMany(count, users, routes);
+        var reviews = ReviewFaker.GenerateMany(count, users);
         db.Reviews.AddRange(reviews);
+        reviews.ToList().ForEach(p => Console.WriteLine($"reviews: {p.Id}"));
 
         var media = MediaFaker.GenerateMany(count, reviews);
         db.Medias.AddRange(media);
+        media.ToList().ForEach(p => Console.WriteLine($"media: {p.Id}"));
 
         var marks = MarkFaker.GenerateMany(count, users, routes);
         db.Marks.AddRange(marks);
+        marks.ToList().ForEach(p => Console.WriteLine($"marks: {p.Id}"));
 
         var subs = SubscriptionFaker.GenerateMany(count, users);
         db.Subscriptions.AddRange(subs);
+        subs.ToList().ForEach(p => Console.WriteLine($"subs: {p.SubscriberId}"));
 
         db.SaveChanges();
     }
@@ -50,16 +61,18 @@ public static class FakeDataSeeder
         var routes = RouteFaker.GenerateMany(count, users);
         await db.Routes.AddRangeAsync(routes, cancellationToken);
         
-        var points = PointFaker.GenerateMany(count);
-        await db.Points.AddRangeAsync(points, cancellationToken);
+        var placePoints = PointFaker.GenerateMany(count);
+        db.Points.AddRange(placePoints);
+        var additionalPlacePoints = PointFaker.GenerateMany(count);
+        db.Points.AddRange(additionalPlacePoints);
 
-        var places = PlaceFaker.GenerateMany(count, points);
+        var places = PlaceFaker.GenerateMany(count, placePoints);
         await db.Places.AddRangeAsync(places, cancellationToken);
-
-        var additionalPlaces = AdditionalPlaceFaker.GenerateMany(count, points);
+        
+        var additionalPlaces = AdditionalPlaceFaker.GenerateMany(count, additionalPlacePoints);
         await db.AdditionalPlaces.AddRangeAsync(additionalPlaces, cancellationToken);
 
-        var reviews = ReviewFaker.GenerateMany(count, users, routes);
+        var reviews = ReviewFaker.GenerateMany(count, users);
         await db.Reviews.AddRangeAsync(reviews, cancellationToken);
 
         var media = MediaFaker.GenerateMany(count, reviews);

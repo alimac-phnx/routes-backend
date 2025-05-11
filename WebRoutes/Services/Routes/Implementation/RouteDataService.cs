@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
-using WebRoutes.Models;
 using WebRoutes.Repositories;
 using Route = WebRoutes.Models.Route;
 
-namespace WebRoutes.Services.implementation
+namespace WebRoutes.Services.Routes.Implementation
 {
-    public class TripService : ITripService
+    internal class RouteDataService : IRouteDataService
     {
         private readonly ITripRepository _tripRepository;
 
         private readonly IMapper _mapper;
 
-        public TripService(ITripRepository tripRepository, IMapper mapper)
+        public RouteDataService(ITripRepository tripRepository, IMapper mapper)
         {
             _tripRepository = tripRepository;
             _mapper = mapper;
@@ -24,7 +23,7 @@ namespace WebRoutes.Services.implementation
 
         public async Task<Route?> GetRouteByIdAsync(int id)
         {
-            return await _tripRepository.GetByIdAsync(id);
+            return await _tripRepository.GetRouteWithDetailsByIdAsync(id);
         }
 
         public async Task CreateRouteAsync(Route route)

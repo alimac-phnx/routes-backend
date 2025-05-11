@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WebRoutes.Models;
 using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Infrastructure.Configurations;
 
-public class RouteConfiguration : IEntityTypeConfiguration<Route>
+internal class RouteConfiguration : IEntityTypeConfiguration<Route>
 {
     public void Configure(EntityTypeBuilder<Route> builder)
     {
@@ -15,9 +14,18 @@ public class RouteConfiguration : IEntityTypeConfiguration<Route>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(r => r.Places)
-            .WithMany(p => p.Routes);
+            .WithOne()
+            .HasForeignKey(p => p.RouteId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(r => r.AdditionalPlaces)
-            .WithMany(ap => ap.Routes);
+            .WithOne()
+            .HasForeignKey(p => p.RouteId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.HasMany(r => r.Reviews)
+            .WithOne()
+            .HasForeignKey(p => p.RouteId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

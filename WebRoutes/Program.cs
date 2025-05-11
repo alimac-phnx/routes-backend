@@ -8,7 +8,16 @@ using WebRoutes.Repositories.implementation;
 using WebRoutes.Services;
 using WebRoutes.Services.implementation;
 using WebRoutes.Infrastructure.TestDataConfig;
+using WebRoutes.Services.Routes;
+using WebRoutes.Services.Routes.Implementation;
+using WebRoutes.Services.Subscriptions;
+using WebRoutes.Services.Subscriptions.Implementation;
+using WebRoutes.Services.Users;
+using WebRoutes.Services.Users.Implementation;
 using Route = WebRoutes.Models.Route;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using dotenv.net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,12 +54,12 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped<IRepository<Route>, Repository<Route>>();
 
 builder.Services.AddScoped<ITripRepository, RouteRepository>();
-builder.Services.AddScoped<ITripService, TripService>();
+builder.Services.AddScoped<IRouteDataService, RouteDataService>();
 
-builder.Services.AddScoped<IBasePlaceRepository<Place>, BasePlaceRepository<Place>>();
+builder.Services.AddScoped<ILocationRepository<Place>, LocationRepository<Place>>();
 builder.Services.AddScoped<IPlaceService, PlaceService>();
 
-builder.Services.AddScoped<IBasePlaceRepository<AdditionalPlace>, BasePlaceRepository<AdditionalPlace>>();
+builder.Services.AddScoped<ILocationRepository<AdditionalPlace>, LocationRepository<AdditionalPlace>>();
 builder.Services.AddScoped<IAdditionalPlaceService, AdditionalPlaceService>();
 
 builder.Services.AddScoped<IMarkRepository, MarkRepository>();
@@ -60,10 +69,18 @@ builder.Services.AddScoped<IMediaRepository, MediaRepository>();
 builder.Services.AddScoped<IMediaService, MediaService>();
 
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+builder.Services.AddScoped<ISubscriptionDataService, SubscriptionDataService>();
 builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
+builder.Services.AddScoped<ISubscriptionValidationService, SubscriptionValidationService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserDataService, UserDataService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<IRouteService, RouteService>();
+builder.Services.AddScoped<IRouteDataService, RouteDataService>();
+
+builder.Services.AddScoped<IImageStorageService, ImageStorageService>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

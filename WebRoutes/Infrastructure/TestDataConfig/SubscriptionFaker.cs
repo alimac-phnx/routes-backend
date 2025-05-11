@@ -3,7 +3,7 @@ using WebRoutes.Models;
 
 namespace WebRoutes.Infrastructure.TestDataConfig;
 
-public static class SubscriptionFaker
+internal static class SubscriptionFaker
 {
     public static ICollection<Subscription> GenerateMany(int count, ICollection<User> users)
     {
@@ -25,7 +25,9 @@ public static class SubscriptionFaker
                 return new Subscription
                 {
                     SubscriberId = subscriberId,
+                    Subscriber = users.First(u => u.Id == subscriberId),
                     FolloweeId = followeeId,
+                    Followee = users.First(u => u.Id == followeeId),
                 };
             })
             .Generate(count);

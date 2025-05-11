@@ -4,7 +4,7 @@ using WebRoutes.Models;
 
 namespace WebRoutes.Infrastructure.Configurations;
 
-public class SubscriptionConfiguration : IEntityTypeConfiguration<Subscription>
+internal class SubscriptionConfiguration : IEntityTypeConfiguration<Subscription>
 {
     public void Configure(EntityTypeBuilder<Subscription> builder)
     {

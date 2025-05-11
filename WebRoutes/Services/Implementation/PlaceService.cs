@@ -3,11 +3,11 @@ using WebRoutes.Repositories;
 
 namespace WebRoutes.Services.implementation
 {
-    public class PlaceService : IPlaceService
+    internal class PlaceService : IPlaceService
     {
-        private readonly IBasePlaceRepository<Place> _placeRepository;
+        private readonly ILocationRepository<Place> _placeRepository;
 
-        public PlaceService(IBasePlaceRepository<Place> placeRepository)
+        public PlaceService(ILocationRepository<Place> placeRepository)
         {
             _placeRepository = placeRepository;
         }

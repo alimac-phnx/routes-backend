@@ -1,13 +1,12 @@
-﻿using WebRoutes.Models;
-using Route = WebRoutes.Models.Route;
+﻿using Route = WebRoutes.Models.Route;
 
-namespace WebRoutes.Services
+namespace WebRoutes.Services.Routes
 {
-    public interface ITripService
+    internal interface IRouteDataService
     {
         Task<IEnumerable<Route>> GetAllRoutesAsync();
         
-        Task<Models.Route?> GetRouteByIdAsync(int id);
+        Task<Route?> GetRouteByIdAsync(int id);
         
         Task CreateRouteAsync(Route route);
         

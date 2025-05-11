@@ -4,11 +4,11 @@ using WebRoutes.Repositories;
 
 namespace WebRoutes.Services.implementation
 {
-    public class AdditionalPlaceService : IAdditionalPlaceService
+    internal class AdditionalPlaceService : IAdditionalPlaceService
     {
-        private readonly IBasePlaceRepository<AdditionalPlace> _additionalPlaceRepository;
+        private readonly ILocationRepository<AdditionalPlace> _additionalPlaceRepository;
 
-        public AdditionalPlaceService(IBasePlaceRepository<AdditionalPlace> additionalPlaceRepository)
+        public AdditionalPlaceService(ILocationRepository<AdditionalPlace> additionalPlaceRepository)
         {
             _additionalPlaceRepository = additionalPlaceRepository;
         }

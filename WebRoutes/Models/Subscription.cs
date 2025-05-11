@@ -1,15 +1,17 @@
-﻿namespace WebRoutes.Models
+﻿using System.Text.Json.Serialization;
+
+namespace WebRoutes.Models
 {
     public class Subscription
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
     
-        public int SubscriberId { get; set; }
+        public int SubscriberId { get; init; }
         
-        public User? Subscriber { get; set; }
+        public User Subscriber { get; init; }
     
-        public int FolloweeId { get; set; }
+        public int FolloweeId { get; init; }
         
-        public User? Followee { get; set; }
+        public User Followee { get; init; }
     }
 }

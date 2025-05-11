@@ -4,7 +4,7 @@ using WebRoutes.Models;
 
 namespace WebRoutes.Repositories.implementation
 {
-    public class MarkRepository : Repository<Mark>, IMarkRepository
+    internal class MarkRepository : Repository<Mark>, IMarkRepository
     {
         public MarkRepository(ApplicationDbContext context) : base(context) { }
 

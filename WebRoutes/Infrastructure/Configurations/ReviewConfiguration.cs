@@ -9,14 +9,16 @@ public class ReviewConfiguration : IEntityTypeConfiguration<Review>
 {
     public void Configure(EntityTypeBuilder<Review> builder)
     {
-        builder.HasOne<Route>()
-            .WithMany()
-            .HasForeignKey(r => r.RouteId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.HasIndex(s => new { s.UserId, s.RouteId });
 
         builder.HasOne<User>()
             .WithMany()
             .HasForeignKey(r => r.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.HasOne<Route>()
+            .WithMany()
+            .HasForeignKey(r => r.RouteId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

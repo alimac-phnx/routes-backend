@@ -5,7 +5,7 @@ using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Repositories.implementation
 {
-    public class RouteRepository : Repository<Route>, ITripRepository
+    internal class RouteRepository : Repository<Route>, ITripRepository
     {
         public RouteRepository(ApplicationDbContext context) : base(context) { }
 
@@ -13,9 +13,21 @@ namespace WebRoutes.Repositories.implementation
         {
             return await _context.Routes
                 .Include(r => r.User)
-                .Include(r => r.Places)
-                .Include(r => r.AdditionalPlaces)
+                .Include(r => r.Marks)
                 .ToListAsync();
+        }
+        
+        public async Task<Route?> GetRouteWithDetailsByIdAsync(int id)
+        {
+            return await _context.Routes
+                .Include(r => r.User)
+                .Include(r => r.Places)
+                .ThenInclude(p => p.Point)
+                .Include(r => r.AdditionalPlaces)
+                .ThenInclude(ap => ap.Point)
+                .Include(r => r.Marks)
+                .Include(r => r.Reviews)
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task UpdateRouteSimplifiedAsync(Route route)
@@ -23,6 +35,7 @@ namespace WebRoutes.Repositories.implementation
             var existingRoute = await _context.Routes
                 .Include(r => r.Places)
                 .Include(r => route.AdditionalPlaces)
+                .Include(r => r.Marks)
                 .FirstOrDefaultAsync(r => r.Id == route.Id);
 
             if (existingRoute == null)

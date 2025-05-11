@@ -4,7 +4,7 @@ using WebRoutes.Models;
 
 namespace WebRoutes.Repositories.implementation
 {
-    public class SubscriptionRepository : Repository<Subscription>, ISubscriptionRepository
+    internal class SubscriptionRepository : Repository<Subscription>, ISubscriptionRepository
     {
         public SubscriptionRepository(ApplicationDbContext context) : base(context) { }
 
@@ -13,6 +13,8 @@ namespace WebRoutes.Repositories.implementation
             return await _context.Subscriptions
                 .AsNoTracking()
                 .Where(s => s.SubscriberId == userId)
+                .Include(s => s.Subscriber)
+                .Include(s => s.Followee)
                 .ToListAsync();
         }
 
@@ -21,6 +23,8 @@ namespace WebRoutes.Repositories.implementation
             return await _context.Subscriptions
                 .AsNoTracking()
                 .Where(s => s.FolloweeId == userId)
+                .Include(s => s.Subscriber)
+                .Include(s => s.Followee)
                 .ToListAsync();
         }
 

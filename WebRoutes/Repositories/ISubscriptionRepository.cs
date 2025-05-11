@@ -1,8 +1,9 @@
-﻿using WebRoutes.Models;
+﻿using WebRoutes.Dtos;
+using WebRoutes.Models;
 
 namespace WebRoutes.Repositories
 {
-    public interface ISubscriptionRepository : IRepository<Subscription>
+    internal interface ISubscriptionRepository : IRepository<Subscription>
     {
         Task<IEnumerable<Subscription>> GetSubscriptionsByUserIdAsync(int userId);
         

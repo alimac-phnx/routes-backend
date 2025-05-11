@@ -3,7 +3,7 @@ using WebRoutes.Models;
 
 namespace WebRoutes.Infrastructure.TestDataConfig;
 
-public static class UserFaker
+internal static class UserFaker
 {
     private static int _id = 1;
 
@@ -15,6 +15,8 @@ public static class UserFaker
             .RuleFor(u => u.LastName, f => f.Name.LastName())
             .RuleFor(u => u.FirstName, f => f.Name.FirstName())
             .RuleFor(u => u.SecondName, f => f.Name.FirstName())
+            .RuleFor(u => u.Email, f => f.Internet.Email())
+            .RuleFor(u => u.ImageUrl, f => f.Image.PicsumUrl())
             .Generate(count);
     }
 }

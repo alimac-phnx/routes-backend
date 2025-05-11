@@ -9,16 +9,16 @@ public class MarkConfiguration : IEntityTypeConfiguration<Mark>
 {
     public void Configure(EntityTypeBuilder<Mark> builder)
     {
-        builder.HasOne<Route>()
-            .WithMany()
+        builder.HasIndex(s => new { s.UserId, s.RouteId });
+        
+        builder.HasOne(m => m.Route)
+            .WithMany(r => r.Marks)
             .HasForeignKey(m => m.RouteId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne<User>()
-            .WithMany()
+        builder.HasOne(m => m.User)
+            .WithMany(u => u.Marks)
             .HasForeignKey(m => m.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasKey(m => new { m.UserId, m.RouteId });
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -2,8 +2,8 @@
 {
     public enum MarkType
     {
-        Like,
-        Save,
-        Done
+        Mine,
+        Done,
+        Liked,
     }
 }

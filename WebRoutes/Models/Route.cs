@@ -8,7 +8,7 @@ namespace WebRoutes.Models
 
         public int UserId { get; set; }
 
-        public User User { get; set; } = null!;
+        public User User { get; set; }
 
         public string Name { get; set; }
 
@@ -28,8 +28,14 @@ namespace WebRoutes.Models
         
         public DateTime DateUploaded { get; set; }
 
+        public ICollection<string> ImagesUrls { get; set; }
+        
         public ICollection<Place> Places { get; set; }
         
         public ICollection<AdditionalPlace> AdditionalPlaces { get; set; }
+        
+        public ICollection<Review> Reviews { get; set; }
+        
+        public ICollection<Mark> Marks { get; set; }
     }
 }

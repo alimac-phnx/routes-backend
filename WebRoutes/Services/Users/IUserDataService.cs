@@ -1,12 +1,14 @@
 ﻿using WebRoutes.Models;
 
-namespace WebRoutes.Services
+namespace WebRoutes.Services.Users
 {
-    public interface IUserService
+    public interface IUserDataService
     {
         Task<IEnumerable<User>> GetAllUsersAsync();
         
         Task<User?> GetUserByIdAsync(int id);
+
+        Task<User?> GetUserByEmailAsync(string email);
         
         Task CreateUserAsync(User user);
         

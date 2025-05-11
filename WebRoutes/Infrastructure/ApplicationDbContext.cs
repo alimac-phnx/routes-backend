@@ -4,7 +4,7 @@ using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Infrastructure
 {
-    public class ApplicationDbContext : DbContext
+    internal class ApplicationDbContext : DbContext
     {
         public DbSet<Route> Routes { get; set; }
         

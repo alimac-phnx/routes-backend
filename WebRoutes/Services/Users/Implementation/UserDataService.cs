@@ -1,13 +1,13 @@
 ﻿using WebRoutes.Models;
 using WebRoutes.Repositories;
 
-namespace WebRoutes.Services.implementation
+namespace WebRoutes.Services.Users.Implementation
 {
-    public class UserService : IUserService
+    internal class UserDataService : IUserDataService
     {
         private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserDataService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -20,6 +20,11 @@ namespace WebRoutes.Services.implementation
         public async Task<User?> GetUserByIdAsync(int id)
         {
             return await _userRepository.GetUserWithRoutesAsync(id);
+        }
+        
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            return await _userRepository.GetUserWithRoutesAsync(email);
         }
 
         public async Task CreateUserAsync(User user)

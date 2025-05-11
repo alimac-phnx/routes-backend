@@ -4,7 +4,7 @@ using WebRoutes.Models;
 
 namespace WebRoutes.Repositories.implementation
 {
-    public class MediaRepository : Repository<Media>, IMediaRepository
+    internal class MediaRepository : Repository<Media>, IMediaRepository
     {
         public MediaRepository(ApplicationDbContext context) : base(context) { }
 

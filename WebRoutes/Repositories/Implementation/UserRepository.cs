@@ -4,7 +4,7 @@ using WebRoutes.Models;
 
 namespace WebRoutes.Repositories.implementation
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    internal class UserRepository : Repository<User>, IUserRepository
     {
         public UserRepository(ApplicationDbContext context) : base(context) { }
 
@@ -12,7 +12,20 @@ namespace WebRoutes.Repositories.implementation
         {
             return await _context.Users
                 .Include(u => u.Routes)
+                .Include(u => u.Subscriptions)!
+                .ThenInclude(s => s.Followee)
+                .Include(u => u.Marks)!
+                .ThenInclude(m => m.Route)
                 .FirstOrDefaultAsync(u => u.Id == id);
+        }
+        
+        public async Task<User?> GetUserWithRoutesAsync(string email)
+        {
+            return await _context.Users
+                .Include(u => u.Routes)
+                .Include(u => u.Subscriptions)
+                .Include(u => u.Marks)
+                .FirstOrDefaultAsync(u => u.Email == email);
         }
     }
 }

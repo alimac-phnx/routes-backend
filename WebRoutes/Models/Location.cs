@@ -6,6 +6,8 @@ namespace WebRoutes.Models
     {
         public int Id { get; set; }
         
+        public int RouteId { get; set; }
+        
         public int PointId { get; set; }
         
         public string Name { get; set; }
@@ -13,8 +15,5 @@ namespace WebRoutes.Models
         public string Description { get; set; }
         
         public Point Point { get; set; }
-
-        [JsonIgnore]
-        public ICollection<Route> Routes { get; set; }
     }
 }

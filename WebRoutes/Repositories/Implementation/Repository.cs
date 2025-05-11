@@ -3,7 +3,7 @@ using WebRoutes.Infrastructure;
 
 namespace WebRoutes.Repositories.implementation
 {
-    public class Repository<T> : IRepository<T> where T : class
+    internal class Repository<T> : IRepository<T> where T : class
     {
         protected readonly ApplicationDbContext _context;
 
