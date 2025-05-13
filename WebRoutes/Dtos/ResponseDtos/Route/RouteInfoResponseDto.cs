@@ -16,9 +16,7 @@ public class RouteInfoResponseDto
     
     public DateTime CreatedAt { get; set; }
     
-    public ICollection<string> ImagesUrls { get; set; }
-    
-    public int RouteDistance { get; set; }
+    public float RouteDistance { get; set; }
     
     public float RouteRating { get; set; }
     

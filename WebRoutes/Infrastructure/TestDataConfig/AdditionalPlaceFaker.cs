@@ -16,6 +16,7 @@ internal static class AdditionalPlaceFaker
             .RuleFor(p => p.Description, f => f.Lorem.Paragraph())
             .RuleFor(p => p.PointId, f => points.Single(s => s.Id == f.IndexFaker + 1 + count).Id)
             .RuleFor(p => p.Type, f => f.PickRandom<AdditionalPlaceType>())
+            .RuleFor(u => u.ImageUrl, f => f.Image.PicsumUrl())
             .Generate(count);
     }
 }

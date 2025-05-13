@@ -15,5 +15,7 @@ namespace WebRoutes.Models
         public string Description { get; set; }
         
         public Point Point { get; set; }
+
+        public string? ImageUrl { get; set; }
     }
 }

@@ -8,6 +8,11 @@ internal class RouteConfiguration : IEntityTypeConfiguration<Route>
 {
     public void Configure(EntityTypeBuilder<Route> builder)
     {
+        builder.HasKey(r => r.Id);
+        
+        builder.Property(r => r.Id)
+            .ValueGeneratedOnAdd();
+        
         builder.HasOne(r => r.User)
             .WithMany(u => u.Routes)
             .HasForeignKey(r => r.UserId)

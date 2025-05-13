@@ -1,32 +1,32 @@
 ﻿using WebRoutes.Models;
 using WebRoutes.Repositories;
 
-namespace WebRoutes.Services.implementation
+namespace WebRoutes.Services.Places.Implementation
 {
-    internal class PlaceService : IPlaceService
+    internal class PlaceDataService : IPlaceDataService
     {
         private readonly ILocationRepository<Place> _placeRepository;
 
-        public PlaceService(ILocationRepository<Place> placeRepository)
+        public PlaceDataService(ILocationRepository<Place> placeRepository)
         {
             _placeRepository = placeRepository;
         }
 
-        public async Task<IEnumerable<Place>> GetAllPlacesAsync()
+        /*public async Task<IEnumerable<Place>> GetAllPlacesAsync()
         {
             return await _placeRepository.GetAllAsync();
-        }
+        }*/
 
-        public async Task<Place?> GetPlaceByIdAsync(int id)
+        /*public async Task<Place?> GetPlaceByIdAsync(int id)
         {
             return await _placeRepository.GetByIdAsync(id);
-        }
+        }*/
 
-        public async Task<IEnumerable<Place>> GetPlacesOrderedByVisitAsync()
+        /*public async Task<IEnumerable<Place>> GetPlacesOrderedByVisitAsync()
         {
             var places = await _placeRepository.GetAllAsync();
             return places.OrderBy(p => p.OrderOfVisit);
-        }
+        }*/
 
         public async Task CreatePlaceAsync(Place place)
         {
@@ -36,18 +36,18 @@ namespace WebRoutes.Services.implementation
 
         public async Task UpdatePlaceAsync(Place place)
         {
-            _placeRepository.Update(place);
-            await _placeRepository.SaveChangesAsync();
+            //_placeRepository.Update(place);
+            //await _placeRepository.SaveChangesAsync();
         }
 
         public async Task DeletePlaceAsync(int id)
         {
-            var place = await _placeRepository.GetByIdAsync(id);
-            if (place != null)
-            {
-                _placeRepository.Delete(place);
-                await _placeRepository.SaveChangesAsync();
-            }
+            //var place = await _placeRepository.GetByIdAsync(id);
+            //if (place != null)
+            //{
+            //    _placeRepository.Delete(place);
+            //    await _placeRepository.SaveChangesAsync();
+            //}
         }
     }
 }

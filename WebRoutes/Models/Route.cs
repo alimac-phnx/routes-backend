@@ -14,8 +14,6 @@ namespace WebRoutes.Models
 
         public RouteType Type { get; set; }
         
-        public string Theme { get; set; }
-        
         public string? Description { get; set; }
         
         public float Length { get; set; }
@@ -27,12 +25,10 @@ namespace WebRoutes.Models
         public float Rating { get; set; }
         
         public DateTime DateUploaded { get; set; }
-
-        public ICollection<string> ImagesUrls { get; set; }
         
         public ICollection<Place> Places { get; set; }
         
-        public ICollection<AdditionalPlace> AdditionalPlaces { get; set; }
+        public ICollection<AdditionalPlace>? AdditionalPlaces { get; set; }
         
         public ICollection<Review> Reviews { get; set; }
         

@@ -2,38 +2,39 @@
 using WebRoutes.Enums;
 using WebRoutes.Models;
 using WebRoutes.Services;
+using WebRoutes.Services.AdditionalPlaces;
 
 namespace WebRoutes.Controllers
 {
-    [ApiController]
+    /*[ApiController]
     [Route("api/[controller]")]
     public class AdditionalPlacesController : ControllerBase
     {
-        private readonly IAdditionalPlaceService _additionalPlaceService;
+        private readonly IAdditionalPlaceDataService _additionalPlaceDataService;
 
-        public AdditionalPlacesController(IAdditionalPlaceService additionalPlaceService)
+        public AdditionalPlacesController(IAdditionalPlaceDataService additionalPlaceDataService)
         {
-            _additionalPlaceService = additionalPlaceService;
+            _additionalPlaceDataService = additionalPlaceDataService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AdditionalPlace>>> GetAdditionalPlaces()
         {
-            var additionalPlaces = await _additionalPlaceService.GetAllAdditionalPlacesAsync();
+            var additionalPlaces = await _additionalPlaceDataService.GetAllAdditionalPlacesAsync();
             return Ok(additionalPlaces);
         }
 
         [HttpGet("by-type/{type}")]
         public async Task<ActionResult<IEnumerable<AdditionalPlace>>> GetAdditionalPlacesByType(AdditionalPlaceType type)
         {
-            var additionalPlaces = await _additionalPlaceService.GetAdditionalPlacesByTypeAsync(type);
+            var additionalPlaces = await _additionalPlaceDataService.GetAdditionalPlacesByTypeAsync(type);
             return Ok(additionalPlaces);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<AdditionalPlace>> GetAdditionalPlaceById(int id)
         {
-            var additionalPlace = await _additionalPlaceService.GetAdditionalPlaceByIdAsync(id);
+            var additionalPlace = await _additionalPlaceDataService.GetAdditionalPlaceByIdAsync(id);
             if (additionalPlace == null)
             {
                 return NotFound();
@@ -44,7 +45,7 @@ namespace WebRoutes.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateAdditionalPlace(AdditionalPlace additionalPlace)
         {
-            await _additionalPlaceService.CreateAdditionalPlaceAsync(additionalPlace);
+            await _additionalPlaceDataService.CreateAdditionalPlaceAsync(additionalPlace);
             return CreatedAtAction(nameof(GetAdditionalPlaceById), new { id = additionalPlace.Id }, additionalPlace);
         }
 
@@ -56,15 +57,15 @@ namespace WebRoutes.Controllers
                 return BadRequest("ID в маршруте и теле запроса не совпадают.");
             }
 
-            await _additionalPlaceService.UpdateAdditionalPlaceAsync(additionalPlace);
+            await _additionalPlaceDataService.UpdateAdditionalPlaceAsync(additionalPlace);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAdditionalPlace(int id)
         {
-            await _additionalPlaceService.DeleteAdditionalPlaceAsync(id);
+            await _additionalPlaceDataService.DeleteAdditionalPlaceAsync(id);
             return NoContent();
         }
-    }
+    }*/
 }

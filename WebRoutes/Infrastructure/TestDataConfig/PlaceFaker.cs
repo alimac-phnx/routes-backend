@@ -22,6 +22,7 @@ internal class PlaceFaker
             .RuleFor(p => p.RouteId, f => f.Random.Int(1, count))
             .RuleFor(p => p.Name, f => f.Address.City())
             .RuleFor(p => p.Description, f => f.Lorem.Sentence())
+            .RuleFor(u => u.ImageUrl, f => f.Image.PicsumUrl())
             .RuleFor(p => p.PointId, f => points.Single(s => s.Id == f.IndexFaker + 1).Id)
             .FinishWith((f, p) => 
             {

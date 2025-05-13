@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using WebRoutes.Dtos;
 using WebRoutes.Dtos.RequestDtos;
+using WebRoutes.Dtos.RequestDtos.AdditionalPlace;
+using WebRoutes.Dtos.RequestDtos.Place;
+using WebRoutes.Dtos.RequestDtos.Route;
+using WebRoutes.Dtos.RequestDtos.User;
 using WebRoutes.Dtos.ResponseDtos;
 using WebRoutes.Dtos.ResponseDtos.AdditionalPlace;
 using WebRoutes.Dtos.ResponseDtos.Place;
@@ -17,16 +21,37 @@ namespace WebRoutes.Mappers
     {
         public MappingProfile()
         {
+            CreateMap<LocationCreateRequestDto, Point>()
+                .ForMember(dest => dest.Latitude, opt => opt.MapFrom(src => src.Latitude))
+                .ForMember(dest => dest.Longitude, opt => opt.MapFrom(src => src.Longitude))
+                .ReverseMap();
+            
             CreateMap<Location, LocationInfoResponseDto>()
                 .ForMember(dest => dest.LocationName, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.LocationPoint, opt => opt.MapFrom(src => src.Point));
+                .ForMember(dest => dest.Latitude, opt => opt.MapFrom(src => src.Point.Latitude))
+                .ForMember(dest => dest.Longitude, opt => opt.MapFrom(src => src.Point.Longitude))
+                .ForMember(dest => dest.LocationImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
+                .ReverseMap();
+            CreateMap<LocationCreateRequestDto, Location>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.LocationName))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.LocationDescription))
+                .ForMember(dest => dest.Point, opt => opt.MapFrom(src => src))
+                .ReverseMap();
 
             CreateMap<Place, PlaceInfoResponseDto>()
                 .ForMember(dest => dest.LocationInfo, opt => opt.MapFrom(src => src));
+            CreateMap<PlaceCreateRequestDto, Place>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.LocationCreateInfo.LocationName))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.LocationCreateInfo.LocationDescription))
+                .ForMember(dest => dest.Point, opt => opt.MapFrom(src => src.LocationCreateInfo));
             
             CreateMap<AdditionalPlace, AdditionalPlaceInfoResponseDto>()
                 .ForMember(dest => dest.LocationInfo, opt => opt.MapFrom(src => src));
-            
+            CreateMap<AdditionalPlaceCreateRequestDto, AdditionalPlace>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.LocationCreateInfo.LocationName))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.LocationCreateInfo.LocationDescription))
+                .ForMember(dest => dest.Point, opt => opt.MapFrom(src => src.LocationCreateInfo));
+
             CreateMap<Route, RouteInfoResponseDto>()
                 .ForMember(dest => dest.RouteId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
@@ -36,7 +61,6 @@ namespace WebRoutes.Mappers
                 .ForMember(dest => dest.RouteRating, opt => opt.MapFrom(src => src.Rating))
                 .ForMember(dest => dest.RouteType, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.DateUploaded))
-                .ForMember(dest => dest.ImagesUrls, opt => opt.MapFrom(src => src.ImagesUrls))
                 //.ForMember(dest => dest.IsFavorite, opt => opt.MapFrom(src => src.Marks.Any(m => m.MarkType == MarkType.Liked && m.UserId == (int)context.Items["CurrentUserId"])))
                 .ReverseMap();
             CreateMap<Route, RouteCardResponseDto>()
@@ -51,6 +75,18 @@ namespace WebRoutes.Mappers
                 .ForMember(dest => dest.AdditionalPlacesInfos, opt => opt.MapFrom(src => src.AdditionalPlaces))
                 .ForMember(dest => dest.Reviews, opt => opt.MapFrom(src => src.Reviews))
                 .ReverseMap();
+
+            CreateMap<RouteCreateRequestDto, Route>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.RouteTitle))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.RouteDescription))
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.RouteType))
+                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.RouteDistance))
+                .ForMember(dest => dest.DateUploaded, opt => opt.MapFrom(src => src.CreatedAt))
+                .ForMember(dest => dest.Places, opt => opt.MapFrom(src => src.PlacesInfos))
+                .ForMember(dest => dest.AdditionalPlaces, opt => opt.MapFrom(src => src.AdditionalPlacesInfos));
+                
+                
             
             CreateMap<User, UserInfoResponseDto>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))

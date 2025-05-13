@@ -35,10 +35,6 @@ internal static class FakeDataSeeder
         db.Reviews.AddRange(reviews);
         reviews.ToList().ForEach(p => Console.WriteLine($"reviews: {p.Id}"));
 
-        var media = MediaFaker.GenerateMany(count, reviews);
-        db.Medias.AddRange(media);
-        media.ToList().ForEach(p => Console.WriteLine($"media: {p.Id}"));
-
         var marks = MarkFaker.GenerateMany(count, users, routes);
         db.Marks.AddRange(marks);
         marks.ToList().ForEach(p => Console.WriteLine($"marks: {p.Id}"));
@@ -74,9 +70,6 @@ internal static class FakeDataSeeder
 
         var reviews = ReviewFaker.GenerateMany(count, users);
         await db.Reviews.AddRangeAsync(reviews, cancellationToken);
-
-        var media = MediaFaker.GenerateMany(count, reviews);
-        await db.Medias.AddRangeAsync(media, cancellationToken);
 
         var marks = MarkFaker.GenerateMany(count, users, routes);
         await db.Marks.AddRangeAsync(marks, cancellationToken);

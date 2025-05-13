@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebRoutes.Dtos.RequestDtos;
+namespace WebRoutes.Dtos.RequestDtos.User;
 public class UserCreateRequestDto
 {
     [RegularExpression(@"\S+", ErrorMessage = "User name cannot be empty or whitespace.")]

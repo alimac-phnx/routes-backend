@@ -9,6 +9,11 @@ internal class PlaceConfiguration : IEntityTypeConfiguration<Place>
 {
     public void Configure(EntityTypeBuilder<Place> builder)
     {
+        builder.HasKey(p => p.Id);
+        
+        builder.Property(p => p.Id)
+            .ValueGeneratedOnAdd();
+        
         builder.HasIndex(s => new { s.PointId, s.RouteId });
         
         builder.HasOne<Route>()

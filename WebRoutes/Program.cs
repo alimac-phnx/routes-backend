@@ -18,6 +18,10 @@ using Route = WebRoutes.Models.Route;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using dotenv.net;
+using WebRoutes.Services.AdditionalPlaces;
+using WebRoutes.Services.AdditionalPlaces.Implementation;
+using WebRoutes.Services.Places;
+using WebRoutes.Services.Places.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,21 +56,17 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddScoped<IRepository<Route>, Repository<Route>>();
+builder.Services.AddScoped<IRepository<Place>, Repository<Place>>();
 
 builder.Services.AddScoped<ITripRepository, RouteRepository>();
 builder.Services.AddScoped<IRouteDataService, RouteDataService>();
 
 builder.Services.AddScoped<ILocationRepository<Place>, LocationRepository<Place>>();
-builder.Services.AddScoped<IPlaceService, PlaceService>();
 
 builder.Services.AddScoped<ILocationRepository<AdditionalPlace>, LocationRepository<AdditionalPlace>>();
-builder.Services.AddScoped<IAdditionalPlaceService, AdditionalPlaceService>();
 
 builder.Services.AddScoped<IMarkRepository, MarkRepository>();
 builder.Services.AddScoped<IMarkService, MarkService>();
-
-builder.Services.AddScoped<IMediaRepository, MediaRepository>();
-builder.Services.AddScoped<IMediaService, MediaService>();
 
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<ISubscriptionDataService, SubscriptionDataService>();
@@ -76,6 +76,12 @@ builder.Services.AddScoped<ISubscriptionValidationService, SubscriptionValidatio
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserDataService, UserDataService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<IPlaceService, PlaceService>();
+builder.Services.AddScoped<IPlaceDataService, PlaceDataService>();
+
+builder.Services.AddScoped<IAdditionalPlaceService, AdditionalPlaceService>();
+builder.Services.AddScoped<IAdditionalPlaceDataService, AdditionalPlaceDataService>();
 
 builder.Services.AddScoped<IRouteService, RouteService>();
 builder.Services.AddScoped<IRouteDataService, RouteDataService>();

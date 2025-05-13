@@ -9,6 +9,11 @@ internal class AdditionalPlaceConfiguration : IEntityTypeConfiguration<Additiona
 {
     public void Configure(EntityTypeBuilder<AdditionalPlace> builder)
     {
+        builder.HasKey(ap => ap.Id);
+        
+        builder.Property(ap => ap.Id)
+            .ValueGeneratedOnAdd();
+        
         builder.HasIndex(s => new { s.PointId, s.RouteId });
         
         builder.HasOne<Route>()

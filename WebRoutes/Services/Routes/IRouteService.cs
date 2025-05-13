@@ -1,3 +1,4 @@
+using WebRoutes.Dtos.RequestDtos.Route;
 using WebRoutes.Dtos.ResponseDtos;
 using WebRoutes.Dtos.ResponseDtos.Route;
 using Route = WebRoutes.Models.Route;
@@ -10,7 +11,7 @@ public interface IRouteService
         
     Task<RoutePostResponseDto> GetRouteByIdAsync(int id);
         
-    Task<HttpResponseMessage> CreateRouteAsync(Route route);
+    Task<HttpResponseMessage> CreateRouteAsync(RouteCreateRequestDto route);
         
     Task UpdateRouteAsync(Route route);
         

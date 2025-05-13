@@ -46,9 +46,9 @@ namespace WebRoutes.Repositories.implementation
             _context.Set<T>().Remove(entity);
         }
 
-        public async Task SaveChangesAsync()
+        public Task SaveChangesAsync()
         {
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
     }
 

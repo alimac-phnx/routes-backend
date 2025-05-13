@@ -8,8 +8,6 @@ namespace WebRoutes.Infrastructure
     {
         public DbSet<Route> Routes { get; set; }
         
-        public DbSet<Media> Medias { get; set; }
-        
         public DbSet<Mark> Marks { get; set; }
         
         public DbSet<User> Users { get; set; }

@@ -1,38 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebRoutes.Models;
 using WebRoutes.Services;
+using WebRoutes.Services.Places;
 
 namespace WebRoutes.Controllers
 {
-    [ApiController]
+    /*[ApiController]
     [Route("api/[controller]")]
     public class PlacesController : ControllerBase
     {
-        private readonly IPlaceService _placeService;
+        private readonly IPlaceDataService _placeDataService;
 
-        public PlacesController(IPlaceService placeService)
+        public PlacesController(IPlaceDataService placeDataService)
         {
-            _placeService = placeService;
+            _placeDataService = placeDataService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Place>>> GetPlaces()
         {
-            var places = await _placeService.GetAllPlacesAsync();
+            var places = await _placeDataService.GetAllPlacesAsync();
             return Ok(places);
         }
 
         [HttpGet("ordered")]
         public async Task<ActionResult<IEnumerable<Place>>> GetPlacesOrderedByVisit()
         {
-            var places = await _placeService.GetPlacesOrderedByVisitAsync();
+            var places = await _placeDataService.GetPlacesOrderedByVisitAsync();
             return Ok(places);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Place>> GetPlaceById(int id)
         {
-            var place = await _placeService.GetPlaceByIdAsync(id);
+            var place = await _placeDataService.GetPlaceByIdAsync(id);
             if (place == null)
             {
                 return NotFound();
@@ -43,7 +44,7 @@ namespace WebRoutes.Controllers
         [HttpPost]
         public async Task<ActionResult> CreatePlace(Place place)
         {
-            await _placeService.CreatePlaceAsync(place);
+            await _placeDataService.CreatePlaceAsync(place);
             return CreatedAtAction(nameof(GetPlaceById), new { id = place.Id }, place);
         }
 
@@ -55,15 +56,15 @@ namespace WebRoutes.Controllers
                 return BadRequest("ID в маршруте и теле запроса не совпадают.");
             }
 
-            await _placeService.UpdatePlaceAsync(place);
+            await _placeDataService.UpdatePlaceAsync(place);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePlace(int id)
         {
-            await _placeService.DeletePlaceAsync(id);
+            await _placeDataService.DeletePlaceAsync(id);
             return NoContent();
         }
-    }
+    }*/
 }

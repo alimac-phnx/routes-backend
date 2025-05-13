@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebRoutes.Dtos.RequestDtos.Route;
 using WebRoutes.Dtos.ResponseDtos;
 using WebRoutes.Dtos.ResponseDtos.Route;
 using WebRoutes.Services.Routes;
@@ -38,7 +39,7 @@ namespace WebRoutes.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateRoute(Route route)
+        public async Task<ActionResult> CreateRoute(RouteCreateRequestDto route)
         {
             var response = await _routeService.CreateRouteAsync(route);
             
