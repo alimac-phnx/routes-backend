@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace WebRoutes.Infrastructure.TestDataConfig;
+namespace WebRoutes.Infrastructure.TestDataConfiguration;
 
 internal static class FakeDataSeeder
 {

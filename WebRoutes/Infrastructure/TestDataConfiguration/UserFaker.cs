@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using WebRoutes.Models;
 
-namespace WebRoutes.Infrastructure.TestDataConfig;
+namespace WebRoutes.Infrastructure.TestDataConfiguration;
 
 internal static class UserFaker
 {

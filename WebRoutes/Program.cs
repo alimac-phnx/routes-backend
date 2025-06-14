@@ -9,7 +9,7 @@ using WebRoutes.Repositories;
 using WebRoutes.Repositories.implementation;
 using WebRoutes.Services;
 using WebRoutes.Services.implementation;
-using WebRoutes.Infrastructure.TestDataConfig;
+using WebRoutes.Infrastructure.TestDataConfiguration;
 using WebRoutes.Services.Routes;
 using WebRoutes.Services.Routes.Implementation;
 using WebRoutes.Services.Subscriptions;

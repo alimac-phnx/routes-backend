@@ -3,7 +3,7 @@ using WebRoutes.Enums;
 using WebRoutes.Models;
 using Route = WebRoutes.Models.Route;
 
-namespace WebRoutes.Infrastructure.TestDataConfig;
+namespace WebRoutes.Infrastructure.TestDataConfiguration;
 
 internal static class RouteFaker
 {

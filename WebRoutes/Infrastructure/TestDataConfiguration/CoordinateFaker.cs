@@ -1,7 +1,7 @@
 using Bogus;
 using Coordinate = WebRoutes.Models.Coordinate;
 
-namespace WebRoutes.Infrastructure.TestDataConfig;
+namespace WebRoutes.Infrastructure.TestDataConfiguration;
 
 public class CoordinateFaker
 {

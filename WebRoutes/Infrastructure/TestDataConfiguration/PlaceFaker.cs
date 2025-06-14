@@ -1,8 +1,7 @@
 ﻿using Bogus;
 using WebRoutes.Models;
-using Route = WebRoutes.Models.Route;
 
-namespace WebRoutes.Infrastructure.TestDataConfig;
+namespace WebRoutes.Infrastructure.TestDataConfiguration;
 
 /*порядок нужно генерить не только на основе количества точек, которые тут генерятся,
  а ещё и на основе их принадлежности к одному трипу. То есть разбивать их по кучкам
