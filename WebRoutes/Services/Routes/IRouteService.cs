@@ -11,9 +11,9 @@ public interface IRouteService
         
     Task<RoutePostResponseDto> GetRouteByIdAsync(int id);
         
-    Task<HttpResponseMessage> CreateRouteAsync(RouteCreateRequestDto route);
+    Task<HttpResponseMessage> CreateRouteByRequestAsync(RouteCreateRequestDto routeCreateRequest);
         
-    Task UpdateRouteAsync(Route route);
+    Task<HttpResponseMessage> UpdateRouteByRequestAsync(int id, RouteUpdateRequestDto routeUpdateRequest);
         
     Task DeleteRouteAsync(int id);
 }

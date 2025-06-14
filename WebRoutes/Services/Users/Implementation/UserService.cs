@@ -12,13 +12,13 @@ public class UserService : IUserService
 {
     private readonly IMapper _mapper;
     private readonly IUserDataService _userDataService;
-    private readonly IImageStorageService _imageStorageService;
+    private readonly IUserCreatingService _userCreatingService;
 
-    public UserService(IMapper mapper, IUserDataService userDataService, IImageStorageService imageStorageService)
+    public UserService(IMapper mapper, IUserDataService userDataService, IUserCreatingService userCreatingService)
     {
         _mapper = mapper;
         _userDataService = userDataService;
-        _imageStorageService = imageStorageService;
+        _userCreatingService = userCreatingService;
     }
 
     public async Task<IEnumerable<UserInfoResponseDto>> GetAllUsersAsync()
@@ -35,24 +35,21 @@ public class UserService : IUserService
         return _mapper.Map<UserProfileResponseDto>(user);
     }
 
-    public async Task<HttpResponseMessage> CreateUserAsync(UserCreateRequestDto userCreateRequestDto)
+    public async Task<HttpResponseMessage> CreateUserAsync(RegisterRequestDto registerRequest)
     {
-        var user = _mapper.Map<User>(userCreateRequestDto);
-        if (await _userDataService.GetUserByEmailAsync(user.Email) != null)
+        if (await _userDataService.GetUserByEmailAsync(registerRequest.Email) != null)
         {
             return new HttpResponseMessage(HttpStatusCode.BadRequest);
         }
 
-        if (userCreateRequestDto.Image != null)
-        {
-            user.ImageUrl = _imageStorageService.UploadImageAsync(userCreateRequestDto.Image);
-        }
+        var user = _userCreatingService.Initialize(registerRequest);
+        
         await _userDataService.CreateUserAsync(user);
         
         return new HttpResponseMessage(HttpStatusCode.Created);
     }
 
-    public async Task<HttpResponseMessage> UpdateUserAsync(int id, UserUpdateRequestDto userUpdateRequestDto)
+    public async Task<HttpResponseMessage> UpdateUserAsync(int id, UserUpdateRequestDto userUpdateRequest)
     {
         var userToUpdate = await _userDataService.GetUserByIdAsync(id);
         if (userToUpdate == null)
@@ -60,7 +57,7 @@ public class UserService : IUserService
             return new HttpResponseMessage(HttpStatusCode.BadRequest);
         }
         
-        var user = _mapper.Map(userUpdateRequestDto, userToUpdate);
+        var user = _mapper.Map(userUpdateRequest, userToUpdate);
         await _userDataService.UpdateUserAsync(user);
         
         return new HttpResponseMessage(HttpStatusCode.OK);

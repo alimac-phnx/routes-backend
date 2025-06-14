@@ -15,11 +15,9 @@ public class RoutePostResponseDto
     
     public ICollection<AdditionalPlaceInfoResponseDto> AdditionalPlacesInfos { get; init; }
     
-    public string RoutePathImageUrl { get; init; } //??
-    
-    public int RouteTime { get; init; } //??
+    public int RouteDuration { get; init; }
     
     public ICollection<Review> Reviews { get; init; }
     
-    public ICollection<Models.Point> RoutePath { get; init; } //??
+    public ICollection<Coordinate> RoutePath { get; init; }
 }

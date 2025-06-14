@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebRoutes.Dtos.RequestDtos.User;
-public class UserCreateRequestDto
+public class RegisterRequestDto
 {
     [RegularExpression(@"\S+", ErrorMessage = "User name cannot be empty or whitespace.")]
     public required string Username { get; init; }
@@ -17,6 +18,9 @@ public class UserCreateRequestDto
     
     [EmailAddress]
     public required string Email { get; init; }
+    
+    [PasswordPropertyText]
+    public required string Password { get; init; }
     
     public IFormFile? Image { get; init; }
 }

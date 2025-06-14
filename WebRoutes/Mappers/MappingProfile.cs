@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using WebRoutes.Dtos;
 using WebRoutes.Dtos.RequestDtos;
 using WebRoutes.Dtos.RequestDtos.AdditionalPlace;
 using WebRoutes.Dtos.RequestDtos.Place;
@@ -9,7 +8,6 @@ using WebRoutes.Dtos.ResponseDtos;
 using WebRoutes.Dtos.ResponseDtos.AdditionalPlace;
 using WebRoutes.Dtos.ResponseDtos.Place;
 using WebRoutes.Dtos.ResponseDtos.Route;
-using WebRoutes.Dtos.ResponseDtos.Point;
 using WebRoutes.Dtos.ResponseDtos.User;
 using WebRoutes.Enums;
 using WebRoutes.Models;
@@ -21,15 +19,19 @@ namespace WebRoutes.Mappers
     {
         public MappingProfile()
         {
-            CreateMap<LocationCreateRequestDto, Point>()
+            CreateMap<LocationCreateRequestDto, Coordinate>()
                 .ForMember(dest => dest.Latitude, opt => opt.MapFrom(src => src.Latitude))
                 .ForMember(dest => dest.Longitude, opt => opt.MapFrom(src => src.Longitude))
+                .ReverseMap();
+
+            CreateMap<LocationCreateRequestDto, Point>()
+                .ForMember(dest => dest.Coordinate, opt => opt.MapFrom(src => src))
                 .ReverseMap();
             
             CreateMap<Location, LocationInfoResponseDto>()
                 .ForMember(dest => dest.LocationName, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Latitude, opt => opt.MapFrom(src => src.Point.Latitude))
-                .ForMember(dest => dest.Longitude, opt => opt.MapFrom(src => src.Point.Longitude))
+                .ForMember(dest => dest.Latitude, opt => opt.MapFrom(src => src.Point.Coordinate.Latitude))
+                .ForMember(dest => dest.Longitude, opt => opt.MapFrom(src => src.Point.Coordinate.Longitude))
                 .ForMember(dest => dest.LocationImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
                 .ReverseMap();
             CreateMap<LocationCreateRequestDto, Location>()
@@ -70,6 +72,8 @@ namespace WebRoutes.Mappers
                 .ReverseMap();
             CreateMap<Route, RoutePostResponseDto>()
                 .ForMember(dest => dest.RouteInfo, opt => opt.MapFrom(src => src))
+                .ForMember(dest => dest.RouteDuration, opt => opt.MapFrom(src => src.Duration))
+                .ForMember(dest => dest.RoutePath, opt => opt.MapFrom(src => src.RoutePath))
                 .ForMember(dest => dest.AuthorUsername, opt => opt.MapFrom(src => src.User.Username))
                 .ForMember(dest => dest.PlacesInfos, opt => opt.MapFrom(src => src.Places))
                 .ForMember(dest => dest.AdditionalPlacesInfos, opt => opt.MapFrom(src => src.AdditionalPlaces))
@@ -81,12 +85,17 @@ namespace WebRoutes.Mappers
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.RouteTitle))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.RouteDescription))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.RouteType))
-                .ForMember(dest => dest.Length, opt => opt.MapFrom(src => src.RouteDistance))
                 .ForMember(dest => dest.DateUploaded, opt => opt.MapFrom(src => src.CreatedAt))
                 .ForMember(dest => dest.Places, opt => opt.MapFrom(src => src.PlacesInfos))
                 .ForMember(dest => dest.AdditionalPlaces, opt => opt.MapFrom(src => src.AdditionalPlacesInfos));
-                
-                
+            CreateMap<RouteUpdateRequestDto, Route>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.RouteTitle))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.RouteDescription))
+                .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.RouteType))
+                .ForMember(dest => dest.Places, opt => opt.MapFrom(src => src.PlacesInfos))
+                .ForMember(dest => dest.AdditionalPlaces, opt => opt.MapFrom(src => src.AdditionalPlacesInfos))
+                .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
             
             CreateMap<User, UserInfoResponseDto>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
@@ -102,7 +111,7 @@ namespace WebRoutes.Mappers
                     .Sum(m => (int)Math.Floor(m.Route.Length))))
                 .ReverseMap();
             
-            CreateMap<UserCreateRequestDto, User>()
+            CreateMap<RegisterRequestDto, User>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));

@@ -18,7 +18,7 @@ internal class PlaceConfiguration : IEntityTypeConfiguration<Place>
         
         builder.HasOne<Route>()
             .WithMany(r => r.Places)
-            .HasForeignKey(m => m.RouteId)
+            .HasForeignKey(m => m.RouteId)  
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasOne(p => p.Point)

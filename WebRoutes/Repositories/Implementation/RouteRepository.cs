@@ -5,7 +5,7 @@ using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Repositories.implementation
 {
-    internal class RouteRepository : Repository<Route>, ITripRepository
+    internal class RouteRepository : Repository<Route>, IRouteRepository
     {
         public RouteRepository(ApplicationDbContext context) : base(context) { }
 
@@ -40,7 +40,7 @@ namespace WebRoutes.Repositories.implementation
 
             if (existingRoute == null)
             {
-                throw new Exception("Маршрут не найден.");
+                throw new Exception("Route not found");
             }
 
             _context.Entry(existingRoute).CurrentValues.SetValues(route);

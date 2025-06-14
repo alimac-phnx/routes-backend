@@ -14,6 +14,8 @@ namespace WebRoutes.Infrastructure
         
         public DbSet<Review> Reviews { get; set; }
         
+        public DbSet<Coordinate> Coordinates { get; set; }
+        
         public DbSet<Point> Points { get; set; }
         
         public DbSet<Place> Places { get; set; }

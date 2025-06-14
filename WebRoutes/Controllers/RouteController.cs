@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebRoutes.Dtos.RequestDtos.Route;
-using WebRoutes.Dtos.ResponseDtos;
 using WebRoutes.Dtos.ResponseDtos.Route;
 using WebRoutes.Services.Routes;
 using Route = WebRoutes.Models.Route;
@@ -9,6 +9,7 @@ namespace WebRoutes.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class RouteController : ControllerBase
     {
         private readonly IRouteService _routeService;
@@ -32,34 +33,29 @@ namespace WebRoutes.Controllers
             
             if (route == null)
             {
-                return NotFound();
+                return NotFound("Route not found");
             }
             
             return Ok(route);
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateRoute(RouteCreateRequestDto route)
+        public async Task<ActionResult> CreateRoute(RouteCreateRequestDto routeCreateRequest)
         {
-            var response = await _routeService.CreateRouteAsync(route);
+            var response = await _routeService.CreateRouteByRequestAsync(routeCreateRequest);
             
             if (!response.IsSuccessStatusCode)
             {
                 return BadRequest("Route could not be created.");
             }
     
-            return NoContent();
+            return Ok("Route created successfully.");
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateRoute(int id, Route route)
+        public async Task<ActionResult> UpdateRoute(int id, RouteUpdateRequestDto routeUpdateRequest)
         {
-            if (id != route.Id)
-            {
-                return BadRequest();
-            }
-
-            await _routeService.UpdateRouteAsync(route);
+            await _routeService.UpdateRouteByRequestAsync(id, routeUpdateRequest);
             return NoContent();
         }
 

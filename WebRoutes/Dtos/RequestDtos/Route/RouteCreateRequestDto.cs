@@ -21,13 +21,7 @@ public class RouteCreateRequestDto
     
     public required DateTime CreatedAt { get; init; }
     
-    public required float RouteDistance { get; init; }
-    
     public required ICollection<PlaceCreateRequestDto> PlacesInfos { get; init; }
     
     public ICollection<AdditionalPlaceCreateRequestDto>? AdditionalPlacesInfos { get; init; }
-    
-    //public int RouteTime { get; init; } //??
-    
-    //public ICollection<Models.Point> RoutePath { get; init; } //??
 }

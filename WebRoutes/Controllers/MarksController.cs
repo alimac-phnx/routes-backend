@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebRoutes.Models;
 using WebRoutes.Services;
 
@@ -6,6 +7,7 @@ namespace WebRoutes.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class MarksController : ControllerBase
     {
         private readonly IMarkService _markService;

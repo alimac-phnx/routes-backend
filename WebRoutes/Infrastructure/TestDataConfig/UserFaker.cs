@@ -16,6 +16,7 @@ internal static class UserFaker
             .RuleFor(u => u.FirstName, f => f.Name.FirstName())
             .RuleFor(u => u.SecondName, f => f.Name.FirstName())
             .RuleFor(u => u.Email, f => f.Internet.Email())
+            .RuleFor(u => u.PasswordHash, f => f.Internet.Password())
             .RuleFor(u => u.ImageUrl, f => f.Image.PicsumUrl())
             .Generate(count);
     }

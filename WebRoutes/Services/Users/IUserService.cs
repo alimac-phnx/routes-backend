@@ -11,9 +11,9 @@ public interface IUserService
     
     Task<UserProfileResponseDto> GetUserByIdAsync(int id);
         
-    Task<HttpResponseMessage> CreateUserAsync(UserCreateRequestDto userCreateRequestDto);
+    Task<HttpResponseMessage> CreateUserAsync(RegisterRequestDto registerRequest);
         
-    Task<HttpResponseMessage> UpdateUserAsync(int id, UserUpdateRequestDto userUpdateRequestDto);
+    Task<HttpResponseMessage> UpdateUserAsync(int id, UserUpdateRequestDto userUpdateRequest);
         
     Task DeleteUserAsync(int id);
 }

@@ -1,4 +1,6 @@
+using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using WebRoutes.Infrastructure;
 using WebRoutes.Mappers;
@@ -15,13 +17,12 @@ using WebRoutes.Services.Subscriptions.Implementation;
 using WebRoutes.Services.Users;
 using WebRoutes.Services.Users.Implementation;
 using Route = WebRoutes.Models.Route;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
-using dotenv.net;
 using WebRoutes.Services.AdditionalPlaces;
 using WebRoutes.Services.AdditionalPlaces.Implementation;
 using WebRoutes.Services.Places;
 using WebRoutes.Services.Places.Implementation;
+using IRouteBuilder = WebRoutes.Services.Routes.IRouteBuilder;
+using RouteBuilder = WebRoutes.Services.Routes.Implementation.RouteBuilder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,7 +59,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped<IRepository<Route>, Repository<Route>>();
 builder.Services.AddScoped<IRepository<Place>, Repository<Place>>();
 
-builder.Services.AddScoped<ITripRepository, RouteRepository>();
+builder.Services.AddScoped<IRouteRepository, RouteRepository>();
 builder.Services.AddScoped<IRouteDataService, RouteDataService>();
 
 builder.Services.AddScoped<ILocationRepository<Place>, LocationRepository<Place>>();
@@ -76,6 +77,7 @@ builder.Services.AddScoped<ISubscriptionValidationService, SubscriptionValidatio
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserDataService, UserDataService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserCreatingService, UserCreatingService>();
 
 builder.Services.AddScoped<IPlaceService, PlaceService>();
 builder.Services.AddScoped<IPlaceDataService, PlaceDataService>();
@@ -85,14 +87,63 @@ builder.Services.AddScoped<IAdditionalPlaceDataService, AdditionalPlaceDataServi
 
 builder.Services.AddScoped<IRouteService, RouteService>();
 builder.Services.AddScoped<IRouteDataService, RouteDataService>();
+builder.Services.AddScoped<IRouteValidationService, RouteValidationService>();
 
 builder.Services.AddScoped<IImageStorageService, ImageStorageService>();
 
+builder.Services.AddScoped<IJwtService, JwtService>();
+
+builder.Services.AddScoped<IRouteBuilder, RouteBuilder>();
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+            )
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Введите токен в формате: Bearer {your_token}"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new List<string>()
+        }
+    });
+});
 
 var app = builder.Build();
 
@@ -108,6 +159,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -11,15 +11,18 @@ internal static class FakeDataSeeder
         const int count = 10;
         var users = UserFaker.GenerateMany(count);
         db.Users.AddRange(users);
-
-        var routes = RouteFaker.GenerateMany(count, users);
+        
+        var coordinates = CoordinateFaker.GenerateMany(count * 2);
+        db.Coordinates.AddRange(coordinates);
+        
+        var routes = RouteFaker.GenerateMany(count, users, coordinates);
         db.Routes.AddRange(routes);
         routes.ToList().ForEach(p => Console.WriteLine($"routes: {p.Id}"));
         
-        var placePoints = PointFaker.GenerateMany(count);
+        var placePoints = PointFaker.GenerateMany(count, coordinates);
         db.Points.AddRange(placePoints);
         placePoints.ToList().ForEach(p => Console.WriteLine(p.Id));
-        var additionalPlacePoints = PointFaker.GenerateMany(count);
+        var additionalPlacePoints = PointFaker.GenerateMany(count, coordinates);
         db.Points.AddRange(additionalPlacePoints);
         additionalPlacePoints.ToList().ForEach(p => Console.WriteLine(p.Id));
 
@@ -53,13 +56,16 @@ internal static class FakeDataSeeder
         const int count = 10;
         var users = UserFaker.GenerateMany(count);
         await db.Users.AddRangeAsync(users, cancellationToken);
+        
+        var coordinates = CoordinateFaker.GenerateMany(count * 2);
+        db.Coordinates.AddRange(coordinates);
 
-        var routes = RouteFaker.GenerateMany(count, users);
+        var routes = RouteFaker.GenerateMany(count, users, coordinates);
         await db.Routes.AddRangeAsync(routes, cancellationToken);
         
-        var placePoints = PointFaker.GenerateMany(count);
+        var placePoints = PointFaker.GenerateMany(count, coordinates);
         db.Points.AddRange(placePoints);
-        var additionalPlacePoints = PointFaker.GenerateMany(count);
+        var additionalPlacePoints = PointFaker.GenerateMany(count, coordinates);
         db.Points.AddRange(additionalPlacePoints);
 
         var places = PlaceFaker.GenerateMany(count, placePoints);

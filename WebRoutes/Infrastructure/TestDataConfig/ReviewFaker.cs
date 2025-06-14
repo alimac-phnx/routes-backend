@@ -14,10 +14,8 @@ internal static class ReviewFaker
             .RuleFor(r => r.Id, _ => _id++)
             .RuleFor(r => r.UserId, f => f.PickRandom(users).Id)
             .RuleFor(p => p.RouteId, f => f.Random.Int(1, count))
-            .RuleFor(r => r.Header, f => f.Lorem.Sentence())
             .RuleFor(r => r.Text, f => f.Lorem.Paragraph())
             .RuleFor(r => r.Grade, f => f.Random.Int(1, 5))
-            .RuleFor(r => r.DateUploaded, f => f.Date.Recent().ToUniversalTime())
             .Generate(count);
     }
 }

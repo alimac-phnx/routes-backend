@@ -13,5 +13,10 @@ public class PointConfiguration : IEntityTypeConfiguration<Point>
         
         builder.Property(p => p.Id)
             .ValueGeneratedOnAdd();
+        
+        builder.HasOne(r => r.Coordinate)
+            .WithMany(u => u.Points)
+            .HasForeignKey(r => r.CoordinateId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

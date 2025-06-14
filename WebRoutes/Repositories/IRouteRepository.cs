@@ -3,7 +3,7 @@ using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Repositories
 {
-    internal interface ITripRepository : IRepository<Route>
+    internal interface IRouteRepository : IRepository<Route>
     {
         Task<IEnumerable<Route>> GetRoutesWithDetailsAsync();
         Task<Route?> GetRouteWithDetailsByIdAsync(int id);

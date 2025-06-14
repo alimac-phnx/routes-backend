@@ -2,7 +2,7 @@
 
 namespace WebRoutes.Services.Routes
 {
-    internal interface IRouteDataService
+    public interface IRouteDataService
     {
         Task<IEnumerable<Route>> GetAllRoutesAsync();
         

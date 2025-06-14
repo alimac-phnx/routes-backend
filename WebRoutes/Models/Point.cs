@@ -1,4 +1,4 @@
-using NetTopologySuite.Geometries;
+using Coordinate = WebRoutes.Models.Coordinate;
 
 namespace WebRoutes.Models;
 
@@ -8,7 +8,7 @@ public class Point
     
     public int LocationId { get; set; }
     
-    public double Latitude { get; set; }
+    public int CoordinateId { get; set; }
     
-    public double Longitude { get; set; }
+    public Coordinate Coordinate { get; set; }
 }

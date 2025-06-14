@@ -24,7 +24,7 @@ namespace WebRoutes.Services.Users.Implementation
         
         public async Task<User?> GetUserByEmailAsync(string email)
         {
-            return await _userRepository.GetUserWithRoutesAsync(email);
+            return await _userRepository.GetUserByEmailAsync(email);
         }
 
         public async Task CreateUserAsync(User user)

@@ -19,12 +19,9 @@ namespace WebRoutes.Repositories.implementation
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
         
-        public async Task<User?> GetUserWithRoutesAsync(string email)
+        public async Task<User?> GetUserByEmailAsync(string email)
         {
             return await _context.Users
-                .Include(u => u.Routes)
-                .Include(u => u.Subscriptions)
-                .Include(u => u.Marks)
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
     }

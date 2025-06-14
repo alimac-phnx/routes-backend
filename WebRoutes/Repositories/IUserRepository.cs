@@ -6,6 +6,6 @@ namespace WebRoutes.Repositories
     {
         Task<User?> GetUserWithRoutesAsync(int id);
 
-        Task<User?> GetUserWithRoutesAsync(string email);
+        Task<User?> GetUserByEmailAsync(string email);
     }
 }

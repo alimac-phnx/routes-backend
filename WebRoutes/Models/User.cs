@@ -16,6 +16,8 @@ namespace WebRoutes.Models
         
         public string Email { get; init; }
         
+        public string PasswordHash { get; set; }
+        
         public string? ImageUrl { get; set; }
 
         [JsonIgnore]

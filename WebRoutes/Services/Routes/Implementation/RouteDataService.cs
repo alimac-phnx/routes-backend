@@ -1,50 +1,46 @@
-﻿using AutoMapper;
-using WebRoutes.Repositories;
+﻿using WebRoutes.Repositories;
 using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Services.Routes.Implementation
 {
     internal class RouteDataService : IRouteDataService
     {
-        private readonly ITripRepository _tripRepository;
+        private readonly IRouteRepository _routeRepository;
 
-        private readonly IMapper _mapper;
-
-        public RouteDataService(ITripRepository tripRepository, IMapper mapper)
+        public RouteDataService(IRouteRepository routeRepository)
         {
-            _tripRepository = tripRepository;
-            _mapper = mapper;
+            _routeRepository = routeRepository;
         }
 
         public async Task<IEnumerable<Route>> GetAllRoutesAsync()
         {
-            return await _tripRepository.GetRoutesWithDetailsAsync();
+            return await _routeRepository.GetRoutesWithDetailsAsync();
         }
 
         public async Task<Route?> GetRouteByIdAsync(int id)
         {
-            return await _tripRepository.GetRouteWithDetailsByIdAsync(id);
+            return await _routeRepository.GetRouteWithDetailsByIdAsync(id);
         }
 
         public async Task CreateRouteAsync(Route route)
         {
-            await _tripRepository.AddAsync(route);
-            await _tripRepository.SaveChangesAsync();
+            await _routeRepository.AddAsync(route);
+            await _routeRepository.SaveChangesAsync();
         }
 
         public async Task UpdateRouteAsync(Route route)
         {
-            await _tripRepository.UpdateRouteSimplifiedAsync(route);
-            await _tripRepository.SaveChangesAsync();
+            _routeRepository.Update(route);
+            await _routeRepository.SaveChangesAsync();
         }
 
         public async Task DeleteRouteAsync(int id)
         {
-            var route = await _tripRepository.GetByIdAsync(id);
+            var route = await _routeRepository.GetByIdAsync(id);
             if (route != null)
             {
-                _tripRepository.Delete(route);
-                await _tripRepository.SaveChangesAsync();
+                _routeRepository.Delete(route);
+                await _routeRepository.SaveChangesAsync();
             }
         }
     }
