@@ -19,7 +19,7 @@ public class RegisterRequestDto
     [EmailAddress]
     public required string Email { get; init; }
     
-    [PasswordPropertyText]
+    [DataType(DataType.Password)]
     public required string Password { get; init; }
     
     public IFormFile? Image { get; init; }
