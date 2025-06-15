@@ -21,7 +21,7 @@ public class JwtService : IJwtService
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            claims: new List<Claim> { new Claim(ClaimTypes.Email, user.Email) },
+            claims: new List<Claim> { new(ClaimTypes.Email, user.Email) },
             expires: DateTime.UtcNow.AddMonths(3),
             signingCredentials: credentials);
 

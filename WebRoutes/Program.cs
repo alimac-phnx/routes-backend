@@ -52,7 +52,7 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "WebRoutes API",
+        Title = "ByWays API",
     });
 });
 
@@ -126,7 +126,7 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Введите токен в формате: Bearer {your_token}"
+        Description = "Please input the JWT Bearer token"
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -153,7 +153,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebRoutes API v1");
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "ByWays API v1");
         options.RoutePrefix = string.Empty;
     });
 }

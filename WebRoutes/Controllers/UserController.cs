@@ -7,7 +7,7 @@ using WebRoutes.Services.Users;
 namespace WebRoutes.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [Authorize]
     public class UserController : ControllerBase
     {
@@ -49,7 +49,7 @@ namespace WebRoutes.Controllers
         //     return NoContent();
         // }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         public async Task<ActionResult> UpdateUser(int id, UserUpdateRequestDto userUpdateRequestDto)
         {
             var response = await _userService.UpdateUserAsync(id, userUpdateRequestDto);
@@ -61,7 +61,7 @@ namespace WebRoutes.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
             await _userService.DeleteUserAsync(id);
