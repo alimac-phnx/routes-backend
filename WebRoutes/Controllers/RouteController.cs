@@ -8,7 +8,7 @@ using Route = WebRoutes.Models.Route;
 namespace WebRoutes.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/routes")]
     [Authorize]
     public class RouteController : ControllerBase
     {
@@ -27,11 +27,11 @@ namespace WebRoutes.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Route>> GetRoute(int id)
+        public async Task<ActionResult<RoutePostResponseDto>> GetRoute(int id)
         {
             var route = await _routeService.GetRouteByIdAsync(id);
             
-            if (route == null)
+            if (route is null)
             {
                 return NotFound("Route not found");
             }
@@ -39,7 +39,7 @@ namespace WebRoutes.Controllers
             return Ok(route);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<ActionResult> CreateRoute(RouteCreateRequestDto routeCreateRequest)
         {
             var response = await _routeService.CreateRouteByRequestAsync(routeCreateRequest);
@@ -52,14 +52,20 @@ namespace WebRoutes.Controllers
             return Ok("Route created successfully.");
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         public async Task<ActionResult> UpdateRoute(int id, RouteUpdateRequestDto routeUpdateRequest)
         {
-            await _routeService.UpdateRouteByRequestAsync(id, routeUpdateRequest);
-            return NoContent();
+            var response = await _routeService.UpdateRouteByRequestAsync(id, routeUpdateRequest);
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest("Route could not be updated.");
+            }
+            
+            return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteRoute(int id)
         {
             await _routeService.DeleteRouteAsync(id);

@@ -23,8 +23,10 @@ namespace WebRoutes.Repositories.implementation
                 .Include(r => r.User)
                 .Include(r => r.Places)
                 .ThenInclude(p => p.Point)
-                .Include(r => r.AdditionalPlaces)
+                .Include(r => r.AdditionalPlaces)!
                 .ThenInclude(ap => ap.Point)
+                .ThenInclude(p => p.Coordinate)
+                .Include(r => r.RoutePath)
                 .Include(r => r.Marks)
                 .Include(r => r.Reviews)
                 .FirstOrDefaultAsync(r => r.Id == id);
