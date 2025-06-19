@@ -70,6 +70,8 @@ builder.Services.AddScoped<ILocationRepository<AdditionalPlace>, LocationReposit
 
 builder.Services.AddScoped<IMarkRepository, MarkRepository>();
 builder.Services.AddScoped<IMarkDataService, MarkDataService>();
+builder.Services.AddScoped<IMarkService, MarkService>();
+builder.Services.AddScoped<IMarkValidationService, MarkValidationService>();
 
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<ISubscriptionDataService, SubscriptionDataService>();
