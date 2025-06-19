@@ -1,15 +1,17 @@
 ﻿using WebRoutes.Models;
 
-namespace WebRoutes.Services
+namespace WebRoutes.Services.Marks
 {
-    public interface IMarkService
+    public interface IMarkDataService
     {
+        Task<Mark?> GetMarkByIdAsync(int id);
+        
         Task<IEnumerable<Mark>> GetMarksByUserAsync(int userId);
         
         Task<IEnumerable<Mark>> GetMarksByRouteAsync(int routeId);
         
         Task CreateMarkAsync(Mark mark);
-        
-        Task DeleteMarkAsync(int userId, int routeId);
+
+        Task DeleteMarkAsync(Mark mark);
     }
 }

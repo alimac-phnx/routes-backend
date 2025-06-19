@@ -1,5 +1,5 @@
 using AutoMapper;
-using WebRoutes.Dtos.RequestDtos.Place;
+using WebRoutes.Dtos.RequestDtos.Places;
 
 namespace WebRoutes.Services.Places.Implementation;
 

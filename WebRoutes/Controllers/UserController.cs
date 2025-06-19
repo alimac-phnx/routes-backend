@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebRoutes.Dtos.RequestDtos;
+using WebRoutes.Dtos.RequestDtos.Users;
 using WebRoutes.Dtos.ResponseDtos.User;
 using WebRoutes.Services.Users;
 
@@ -35,19 +36,6 @@ namespace WebRoutes.Controllers
             }
             return Ok(user);
         }
-
-        // [HttpPost]
-        // public async Task<ActionResult> CreateUser(UserCreateRequestDto userCreateRequestDto)
-        // {
-        //     var response = await _userService.CreateUserAsync(userCreateRequestDto);
-        //     
-        //     if (!response.IsSuccessStatusCode)
-        //     {
-        //         return BadRequest("User could not be created.");
-        //     }
-        //
-        //     return NoContent();
-        // }
 
         [HttpPut("update/{id}")]
         public async Task<ActionResult> UpdateUser(int id, UserUpdateRequestDto userUpdateRequestDto)

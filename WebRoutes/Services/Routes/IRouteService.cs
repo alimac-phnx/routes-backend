@@ -1,4 +1,4 @@
-using WebRoutes.Dtos.RequestDtos.Route;
+using WebRoutes.Dtos.RequestDtos.Routes;
 using WebRoutes.Dtos.ResponseDtos;
 using WebRoutes.Dtos.ResponseDtos.Route;
 using Route = WebRoutes.Models.Route;

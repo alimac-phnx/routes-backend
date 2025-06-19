@@ -1,4 +1,4 @@
-namespace WebRoutes.Dtos.RequestDtos.AdditionalPlace;
+namespace WebRoutes.Dtos.RequestDtos.AdditionalPlaces;
 
 public class AdditionalPlaceCreateRequestDto
 {

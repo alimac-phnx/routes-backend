@@ -1,17 +1,22 @@
 ﻿using WebRoutes.Models;
 using WebRoutes.Repositories;
 
-namespace WebRoutes.Services.implementation
+namespace WebRoutes.Services.Marks.Implementation
 {
-    public class MarkService : IMarkService
+    public class MarkDataService : IMarkDataService
     {
         private readonly IMarkRepository _markRepository;
 
-        public MarkService(IMarkRepository markRepository)
+        public MarkDataService(IMarkRepository markRepository)
         {
             _markRepository = markRepository;
         }
 
+        public async Task<Mark?> GetMarkByIdAsync(int id)
+        {
+            return await _markRepository.GetByIdAsync(id);
+        }
+        
         public async Task<IEnumerable<Mark>> GetMarksByUserAsync(int userId)
         {
             return await _markRepository.GetMarksByUserIdAsync(userId);
@@ -28,15 +33,10 @@ namespace WebRoutes.Services.implementation
             await _markRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteMarkAsync(int userId, int routeId)
+        public async Task DeleteMarkAsync(Mark mark)
         {
-            var marks = await _markRepository.GetMarksByUserIdAsync(userId);
-            var markToDelete = marks.FirstOrDefault(m => m.RouteId == routeId);
-            if (markToDelete != null)
-            {
-                _markRepository.Delete(markToDelete);
-                await _markRepository.SaveChangesAsync();
-            }
+            _markRepository.Delete(mark);
+            await _markRepository.SaveChangesAsync();
         }
     }
 }

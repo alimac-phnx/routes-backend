@@ -1,6 +1,6 @@
 using System.Net;
 using AutoMapper;
-using WebRoutes.Dtos.RequestDtos.Route;
+using WebRoutes.Dtos.RequestDtos.Routes;
 using WebRoutes.Dtos.ResponseDtos.Route;
 using WebRoutes.Models;
 using WebRoutes.Services.AdditionalPlaces;
@@ -48,7 +48,6 @@ internal class RouteService : IRouteService
     public async Task<HttpResponseMessage> CreateRouteByRequestAsync(RouteCreateRequestDto routeCreateRequestDto)
     {
         var route = _mapper.Map<Route>(routeCreateRequestDto);
-        
         if (!await _routeValidationService.IsRouteValid(route))
         {
             return new HttpResponseMessage(HttpStatusCode.BadRequest);

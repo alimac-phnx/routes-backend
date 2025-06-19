@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebRoutes.Models;
-using WebRoutes.Services;
+using WebRoutes.Dtos.RequestDtos.Marks;
+using WebRoutes.Services.Marks;
 
 namespace WebRoutes.Controllers
 {
@@ -18,16 +18,22 @@ namespace WebRoutes.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult> CreateMark(Mark mark)
+        public async Task<ActionResult> CreateMark(MarkCreateRequestDto markCreateRequest)
         {
-            await _markService.CreateMarkAsync(mark);
-            return Ok();
+            var response = await _markService.CreateMarkAsync(markCreateRequest);
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest("Mark could not be created.");
+            }
+    
+            return Ok("Route created successfully.");
         }
 
-        [HttpDelete("delete/{userId}/{routeId}")]
-        public async Task<ActionResult> DeleteMark(int userId, int routeId)
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> DeleteMark(int id)
         {
-            await _markService.DeleteMarkAsync(userId, routeId);
+            await _markService.DeleteMarkAsync(id);
             return NoContent();
         }
     }

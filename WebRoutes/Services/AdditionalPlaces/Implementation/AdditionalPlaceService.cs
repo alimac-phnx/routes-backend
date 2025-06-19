@@ -1,6 +1,5 @@
 using AutoMapper;
-using WebRoutes.Dtos.RequestDtos.AdditionalPlace;
-using WebRoutes.Dtos.RequestDtos.Place;
+using WebRoutes.Dtos.RequestDtos.AdditionalPlaces;
 using WebRoutes.Models;
 
 namespace WebRoutes.Services.AdditionalPlaces.Implementation;

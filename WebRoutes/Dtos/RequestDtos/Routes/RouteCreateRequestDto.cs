@@ -1,13 +1,8 @@
-using System.ComponentModel.DataAnnotations;
-using WebRoutes.Dtos.RequestDtos.AdditionalPlace;
-using WebRoutes.Dtos.RequestDtos.Place;
-using WebRoutes.Dtos.ResponseDtos.AdditionalPlace;
-using WebRoutes.Dtos.ResponseDtos.Place;
-using WebRoutes.Dtos.ResponseDtos.Route;
+using WebRoutes.Dtos.RequestDtos.AdditionalPlaces;
+using WebRoutes.Dtos.RequestDtos.Places;
 using WebRoutes.Enums;
-using WebRoutes.Models;
 
-namespace WebRoutes.Dtos.RequestDtos.Route;
+namespace WebRoutes.Dtos.RequestDtos.Routes;
 
 public class RouteCreateRequestDto
 {

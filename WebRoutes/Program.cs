@@ -19,6 +19,8 @@ using WebRoutes.Services.Users.Implementation;
 using Route = WebRoutes.Models.Route;
 using WebRoutes.Services.AdditionalPlaces;
 using WebRoutes.Services.AdditionalPlaces.Implementation;
+using WebRoutes.Services.Marks;
+using WebRoutes.Services.Marks.Implementation;
 using WebRoutes.Services.Places;
 using WebRoutes.Services.Places.Implementation;
 using IRouteBuilder = WebRoutes.Services.Routes.IRouteBuilder;
@@ -67,7 +69,7 @@ builder.Services.AddScoped<ILocationRepository<Place>, LocationRepository<Place>
 builder.Services.AddScoped<ILocationRepository<AdditionalPlace>, LocationRepository<AdditionalPlace>>();
 
 builder.Services.AddScoped<IMarkRepository, MarkRepository>();
-builder.Services.AddScoped<IMarkService, MarkService>();
+builder.Services.AddScoped<IMarkDataService, MarkDataService>();
 
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<ISubscriptionDataService, SubscriptionDataService>();

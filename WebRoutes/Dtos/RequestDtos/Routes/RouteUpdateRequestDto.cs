@@ -1,8 +1,8 @@
-using WebRoutes.Dtos.RequestDtos.AdditionalPlace;
-using WebRoutes.Dtos.RequestDtos.Place;
+using WebRoutes.Dtos.RequestDtos.AdditionalPlaces;
+using WebRoutes.Dtos.RequestDtos.Places;
 using WebRoutes.Enums;
 
-namespace WebRoutes.Dtos.RequestDtos.Route;
+namespace WebRoutes.Dtos.RequestDtos.Routes;
 
 public class RouteUpdateRequestDto
 {

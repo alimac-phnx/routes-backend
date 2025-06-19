@@ -1,4 +1,4 @@
-using WebRoutes.Dtos.RequestDtos.AdditionalPlace;
+using WebRoutes.Dtos.RequestDtos.AdditionalPlaces;
 
 namespace WebRoutes.Services.AdditionalPlaces;
 

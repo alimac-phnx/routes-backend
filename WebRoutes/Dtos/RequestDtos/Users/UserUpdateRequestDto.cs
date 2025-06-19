@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-
-namespace WebRoutes.Dtos.RequestDtos;
+namespace WebRoutes.Dtos.RequestDtos.Users;
 
 public class UserUpdateRequestDto
 {
