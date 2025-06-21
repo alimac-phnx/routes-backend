@@ -36,9 +36,9 @@ internal class RouteService : IRouteService
         return _mapper.Map<IEnumerable<RouteCardResponseDto>>(routes);
     }
 
-    public async Task<IEnumerable<RouteCardUserResponseDto>> GetAllRoutesForUserAsync(int userId)
+    public async Task<IEnumerable<RouteCardUserResponseDto>> GetAllRoutesForUserAsync(int id, int currentUserId)
     {
-        var routes = await _routeDataService.GetAllRoutesForUserAsync(userId);
+        var routes = await _routeDataService.GetAllRoutesForUserAsync(id, currentUserId);
         
         return _mapper.Map<IEnumerable<RouteCardUserResponseDto>>(routes);
     }

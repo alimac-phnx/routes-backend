@@ -6,7 +6,7 @@ namespace WebRoutes.Services.Routes
     {
         Task<IEnumerable<Route>> GetAllRoutesAsync(int userId);
 
-        Task<IEnumerable<Route>> GetAllRoutesForUserAsync(int userId);
+        Task<IEnumerable<Route>> GetAllRoutesForUserAsync(int id, int currentUserId);
         
         Task<Route?> GetRouteByIdAsync(int id);
         

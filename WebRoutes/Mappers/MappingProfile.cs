@@ -110,10 +110,8 @@ namespace WebRoutes.Mappers
             CreateMap<User, UserInfoResponseDto>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
                 .ReverseMap();
-            
             CreateMap<User, UserProfileResponseDto>()
                 .ForMember(dest => dest.UserInfo, opt => opt.MapFrom(src => src))
-                .ForMember(dest => dest.Routes, opt => opt.MapFrom(src => src.Routes))
                 .ForMember(dest => dest.SubscriptionsNumber, opt => opt.MapFrom(src => src.Subscriptions.Count(s => s.SubscriberId == src.Id)))
                 .ForMember(dest => dest.FollowersNumber, opt => opt.MapFrom(src => src.Subscriptions.Count(s => s.FolloweeId == src.Id)))
                 .ForMember(dest => dest.Distance, opt => opt.MapFrom(src => src.Marks
@@ -125,7 +123,6 @@ namespace WebRoutes.Mappers
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
-
             CreateMap<UserUpdateRequestDto, User>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())

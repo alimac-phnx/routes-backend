@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace WebRoutes.Models
+﻿namespace WebRoutes.Models
 {
     public class Subscription
     {

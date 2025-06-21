@@ -28,11 +28,11 @@ namespace WebRoutes.Controllers
             return Ok(routes);
         }
         
-        [HttpGet("profile/")]
-        public async Task<ActionResult<IEnumerable<RouteCardUserResponseDto>>> GetUserRoutes()
+        [HttpGet("user/{id}")]
+        public async Task<ActionResult<IEnumerable<RouteCardUserResponseDto>>> GetUserRoutes(int id)
         {
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            var routes = await _routeService.GetAllRoutesForUserAsync(userId);
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var routes = await _routeService.GetAllRoutesForUserAsync(id, currentUserId);
             
             return Ok(routes);
         }

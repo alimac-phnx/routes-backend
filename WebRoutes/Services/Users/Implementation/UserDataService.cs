@@ -13,13 +13,18 @@ namespace WebRoutes.Services.Users.Implementation
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
-        {
+        { 
             return await _userRepository.GetAllAsync();
         }
 
         public async Task<User?> GetUserByIdAsync(int id)
         {
             return await _userRepository.GetUserWithRoutesAsync(id);
+        }
+
+        public async Task<User?> GetUserProfileAsync(int id)
+        {
+            return await _userRepository.GetUserProfileAsync(id);
         }
         
         public async Task<User?> GetUserByEmailAsync(string email)

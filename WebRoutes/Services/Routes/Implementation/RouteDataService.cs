@@ -17,9 +17,17 @@ namespace WebRoutes.Services.Routes.Implementation
             return await _routeRepository.GetRoutesWithDetailsAsync(userId);
         }
 
-        public async Task<IEnumerable<Route>> GetAllRoutesForUserAsync(int userId)
+        public async Task<IEnumerable<Route>> GetAllRoutesForUserAsync(int id, int currentUserId)
         {
-            return await _routeRepository.GetRoutesForUserWithDetailsAsync(userId);
+            var routes = new List<Route>();
+            var favoriteRoutes = await _routeRepository.GetUserFavoriteRoutesAsync(id, currentUserId);
+            routes.AddRange(favoriteRoutes);
+            var doneRoutes = await _routeRepository.GetUserDoneRoutesAsync(id, currentUserId);
+            routes.AddRange(doneRoutes);
+            var createdRoutes = await _routeRepository.GetUserCreatedRoutesAsync(id, currentUserId);
+            routes.AddRange(createdRoutes);
+            
+            return routes;
         }
 
         public async Task<Route?> GetRouteByIdAsync(int id)

@@ -19,6 +19,14 @@ namespace WebRoutes.Repositories.implementation
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
         
+        public async Task<User?> GetUserProfileAsync(int id)
+        {
+            return await _context.Users
+                .Include(u => u.Subscriptions)!
+                .ThenInclude(s => s.Followee)
+                .FirstOrDefaultAsync(u => u.Id == id);
+        }
+        
         public async Task<User?> GetUserByEmailAsync(string email)
         {
             return await _context.Users

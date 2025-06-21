@@ -9,7 +9,7 @@ public interface IRouteService
 {
     Task<IEnumerable<RouteCardResponseDto>> GetAllRoutesAsync(int userId);
 
-    Task<IEnumerable<RouteCardUserResponseDto>> GetAllRoutesForUserAsync(int userId);
+    Task<IEnumerable<RouteCardUserResponseDto>> GetAllRoutesForUserAsync(int id, int currentUserId);
     
     Task<RoutePostResponseDto> GetRouteByIdAsync(int id, int userId);
         

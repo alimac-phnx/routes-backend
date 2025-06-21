@@ -13,7 +13,7 @@ internal static class RouteFaker
     {
         return new Faker<Route>()
             .RuleFor(r => r.Id, f => _id++)
-            .RuleFor(r => r.UserId, f => f.PickRandom(users).Id)
+            .RuleFor(r => r.UserId, f => f.IndexFaker + 1)
             .RuleFor(r => r.Name, f => f.Lorem.Sentence(2))
             .RuleFor(r => r.Type, f => f.PickRandom<RouteType>())
             .RuleFor(r => r.Description, f => f.Lorem.Paragraph())

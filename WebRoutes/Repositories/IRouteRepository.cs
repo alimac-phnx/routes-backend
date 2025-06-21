@@ -7,7 +7,11 @@ namespace WebRoutes.Repositories
     {
         Task<IEnumerable<Route>> GetRoutesWithDetailsAsync(int userId);
 
-        Task<IEnumerable<Route>> GetRoutesForUserWithDetailsAsync(int userId);
+        Task<IEnumerable<Route>> GetUserFavoriteRoutesAsync(int id, int currentUserId);
+
+        Task<IEnumerable<Route>> GetUserDoneRoutesAsync(int id, int currentUserId);
+
+        Task<IEnumerable<Route>> GetUserCreatedRoutesAsync(int id, int currentUserId);
         
         Task<Route?> GetRouteByIdAsync(int id);
 

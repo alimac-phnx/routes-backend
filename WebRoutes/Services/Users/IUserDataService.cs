@@ -7,6 +7,8 @@ namespace WebRoutes.Services.Users
         Task<IEnumerable<User>> GetAllUsersAsync();
         
         Task<User?> GetUserByIdAsync(int id);
+        
+        Task<User?> GetUserProfileAsync(int id);
 
         Task<User?> GetUserByEmailAsync(string email);
         

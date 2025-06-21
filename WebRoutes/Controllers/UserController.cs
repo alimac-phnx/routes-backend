@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebRoutes.Dtos.RequestDtos;
 using WebRoutes.Dtos.RequestDtos.Users;
 using WebRoutes.Dtos.ResponseDtos.User;
 using WebRoutes.Services.Users;
@@ -26,10 +25,10 @@ namespace WebRoutes.Controllers
             return Ok(users);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserProfileResponseDto>> GetUserById(int id)
+        [HttpGet("profile/{id}")]
+        public async Task<ActionResult<UserProfileResponseDto>> GetUserProfile(int id)
         {
-            var user = await _userService.GetUserByIdAsync(id);
+            var user = await _userService.GetUserProfileByIdAsync(id);
             if (user == null)
             {
                 return NotFound();

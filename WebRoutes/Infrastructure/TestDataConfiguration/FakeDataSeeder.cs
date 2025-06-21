@@ -38,9 +38,10 @@ internal static class FakeDataSeeder
         db.Reviews.AddRange(reviews);
         reviews.ToList().ForEach(p => Console.WriteLine($"reviews: {p.Id}"));
 
+        var marksCreate = MarkFaker.CreateGenerateMany(count, users, routes);
+        db.Marks.AddRange(marksCreate);
         var marks = MarkFaker.GenerateMany(count, users, routes);
         db.Marks.AddRange(marks);
-        marks.ToList().ForEach(p => Console.WriteLine($"marks: {p.Id}"));
 
         var subs = SubscriptionFaker.GenerateMany(count, users);
         db.Subscriptions.AddRange(subs);
@@ -77,7 +78,7 @@ internal static class FakeDataSeeder
         var reviews = ReviewFaker.GenerateMany(count, users);
         await db.Reviews.AddRangeAsync(reviews, cancellationToken);
 
-        var marks = MarkFaker.GenerateMany(count, users, routes);
+        var marks = MarkFaker.CreateGenerateMany(count, users, routes);
         await db.Marks.AddRangeAsync(marks, cancellationToken);
 
         var subs = SubscriptionFaker.GenerateMany(count, users);

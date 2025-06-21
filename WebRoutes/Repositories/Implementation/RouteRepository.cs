@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebRoutes.Enums;
 using WebRoutes.Infrastructure;
-using WebRoutes.Models;
 using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Repositories.implementation
@@ -17,11 +17,27 @@ namespace WebRoutes.Repositories.implementation
                 .ToListAsync();
         }
         
-        public async Task<IEnumerable<Route>> GetRoutesForUserWithDetailsAsync(int userId)
+        public async Task<IEnumerable<Route>> GetUserFavoriteRoutesAsync(int id, int currentUserId)
         {
             return await _context.Routes
-                .Where(r => r.Marks!.Any(m => m.UserId == userId))
-                .Include(r => r.Marks!.Where(m => m.UserId == userId))
+                .Where(r => r.Marks!.Any(m => m.UserId == id && m.MarkType == MarkType.Liked))
+                .Include(r => r.Marks!.Where(m => m.UserId == currentUserId))
+                .ToListAsync();
+        }
+        
+        public async Task<IEnumerable<Route>> GetUserDoneRoutesAsync(int id, int currentUserId)
+        {
+            return await _context.Routes
+                .Where(r => r.Marks!.Any(m => m.UserId == id && m.MarkType == MarkType.Done))
+                .Include(r => r.Marks!.Where(m => m.UserId == currentUserId))
+                .ToListAsync();
+        }
+        
+        public async Task<IEnumerable<Route>> GetUserCreatedRoutesAsync(int id, int currentUserId)
+        {
+            return await _context.Routes
+                .Where(r => r.Marks!.Any(m => m.UserId == id && m.MarkType == MarkType.Mine))
+                .Include(r => r.Marks!.Where(m => m.UserId == currentUserId))
                 .ToListAsync();
         }
         

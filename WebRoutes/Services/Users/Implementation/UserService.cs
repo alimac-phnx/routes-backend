@@ -1,11 +1,8 @@
 using System.Net;
 using AutoMapper;
-using WebRoutes.Dtos.RequestDtos;
 using WebRoutes.Dtos.RequestDtos.User;
 using WebRoutes.Dtos.RequestDtos.Users;
-using WebRoutes.Dtos.ResponseDtos;
 using WebRoutes.Dtos.ResponseDtos.User;
-using WebRoutes.Models;
 
 namespace WebRoutes.Services.Users.Implementation;
 
@@ -29,9 +26,9 @@ public class UserService : IUserService
         return _mapper.Map<IEnumerable<UserInfoResponseDto>>(users);
     }
     
-    public async Task<UserProfileResponseDto> GetUserByIdAsync(int id)
+    public async Task<UserProfileResponseDto> GetUserProfileByIdAsync(int id)
     {
-        var user = await _userDataService.GetUserByIdAsync(id);
+        var user = await _userDataService.GetUserProfileAsync(id);
         
         return _mapper.Map<UserProfileResponseDto>(user);
     }
