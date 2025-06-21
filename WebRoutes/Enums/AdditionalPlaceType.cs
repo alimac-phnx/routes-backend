@@ -1,9 +1,8 @@
-﻿namespace WebRoutes.Enums
+﻿namespace WebRoutes.Enums;
+
+public enum AdditionalPlaceType
 {
-    public enum AdditionalPlaceType
-    {
-        Monument,
-        Museum,
-        Galery
-    }
+    Monument,
+    Museum,
+    Galery
 }

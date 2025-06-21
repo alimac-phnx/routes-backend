@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebRoutes.Dtos.RequestDtos.Auth;
-using WebRoutes.Dtos.RequestDtos.User;
 using WebRoutes.Services;
 using WebRoutes.Services.Users;
 

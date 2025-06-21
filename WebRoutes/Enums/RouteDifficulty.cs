@@ -1,9 +1,8 @@
-﻿namespace WebRoutes.Enums
+﻿namespace WebRoutes.Enums;
+
+public enum RouteDifficulty
 {
-    public enum RouteDifficulty
-    {
-        Easy,
-        Medium,
-        Hard
-    }
+    Easy,
+    Medium,
+    Hard
 }

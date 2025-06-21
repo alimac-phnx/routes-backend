@@ -1,9 +1,8 @@
-﻿namespace WebRoutes.Enums
+﻿namespace WebRoutes.Enums;
+
+public enum RouteType
 {
-    public enum RouteType
-    {
-        Walking,
-        Cycling,
-        Car
-    }
+    Walking,
+    Cycling,
+    Car
 }

@@ -1,4 +1,4 @@
-using WebRoutes.Dtos.RequestDtos.User;
+using WebRoutes.Dtos.RequestDtos.Auth;
 using WebRoutes.Dtos.RequestDtos.Users;
 using WebRoutes.Dtos.ResponseDtos.User;
 

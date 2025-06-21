@@ -58,6 +58,9 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.Configure<DefaultPhotoSettings>(
+    builder.Configuration.GetSection("DefaultPhotos"));
+
 builder.Services.AddScoped<IRepository<Route>, Repository<Route>>();
 builder.Services.AddScoped<IRepository<Place>, Repository<Place>>();
 

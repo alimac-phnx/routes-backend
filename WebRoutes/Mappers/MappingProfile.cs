@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using WebRoutes.Dtos.RequestDtos;
 using WebRoutes.Dtos.RequestDtos.AdditionalPlaces;
+using WebRoutes.Dtos.RequestDtos.Auth;
 using WebRoutes.Dtos.RequestDtos.Marks;
 using WebRoutes.Dtos.RequestDtos.Places;
 using WebRoutes.Dtos.RequestDtos.Routes;
-using WebRoutes.Dtos.RequestDtos.User;
 using WebRoutes.Dtos.RequestDtos.Users;
 using WebRoutes.Dtos.ResponseDtos;
 using WebRoutes.Dtos.ResponseDtos.AdditionalPlace;
