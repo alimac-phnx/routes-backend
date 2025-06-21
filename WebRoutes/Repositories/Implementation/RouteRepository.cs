@@ -14,6 +14,8 @@ namespace WebRoutes.Repositories.implementation
             return await _context.Routes
                 .Include(r => r.User)
                 .Include(r => r.Marks!.Where(m => m.UserId == userId))
+                .Include(r => r.Places)
+                .Include(r => r.AdditionalPlaces)
                 .ToListAsync();
         }
         
@@ -22,6 +24,8 @@ namespace WebRoutes.Repositories.implementation
             return await _context.Routes
                 .Where(r => r.Marks!.Any(m => m.UserId == id && m.MarkType == MarkType.Liked))
                 .Include(r => r.Marks!.Where(m => m.UserId == currentUserId))
+                .Include(r => r.Places)
+                .Include(r => r.AdditionalPlaces)
                 .ToListAsync();
         }
         
@@ -30,6 +34,8 @@ namespace WebRoutes.Repositories.implementation
             return await _context.Routes
                 .Where(r => r.Marks!.Any(m => m.UserId == id && m.MarkType == MarkType.Done))
                 .Include(r => r.Marks!.Where(m => m.UserId == currentUserId))
+                .Include(r => r.Places)
+                .Include(r => r.AdditionalPlaces)
                 .ToListAsync();
         }
         
@@ -38,6 +44,8 @@ namespace WebRoutes.Repositories.implementation
             return await _context.Routes
                 .Where(r => r.Marks!.Any(m => m.UserId == id && m.MarkType == MarkType.Mine))
                 .Include(r => r.Marks!.Where(m => m.UserId == currentUserId))
+                .Include(r => r.Places)
+                .Include(r => r.AdditionalPlaces)
                 .ToListAsync();
         }
         

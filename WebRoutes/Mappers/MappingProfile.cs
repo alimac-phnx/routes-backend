@@ -60,6 +60,7 @@ namespace WebRoutes.Mappers
                 .ForMember(dest => dest.RouteId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
                 .ForMember(dest => dest.RouteDistance, opt => opt.MapFrom(src => src.Length))
+                .ForMember(dest => dest.ImagesUrls, opt => opt.MapFrom(src => src.Places.Select(x => x.ImageUrl).Concat(src.AdditionalPlaces!.Select(x => x.ImageUrl))))
                 .ForMember(dest => dest.RouteTitle, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.RouteDescription, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.RouteRating, opt => opt.MapFrom(src => src.Rating))

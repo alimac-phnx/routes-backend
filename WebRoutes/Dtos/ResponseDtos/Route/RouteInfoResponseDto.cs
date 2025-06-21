@@ -8,6 +8,8 @@ public class RouteInfoResponseDto
     
     public int UserId { get; set; }
     
+    public List<string> ImagesUrls { get; set; }
+    
     public string RouteTitle { get; set; }
     
     public string RouteDescription { get; set; }
