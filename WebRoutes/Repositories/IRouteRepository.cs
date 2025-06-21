@@ -5,8 +5,13 @@ namespace WebRoutes.Repositories
 {
     internal interface IRouteRepository : IRepository<Route>
     {
-        Task<IEnumerable<Route>> GetRoutesWithDetailsAsync();
-        Task<Route?> GetRouteWithDetailsByIdAsync(int id);
+        Task<IEnumerable<Route>> GetRoutesWithDetailsAsync(int userId);
+
+        Task<IEnumerable<Route>> GetRoutesForUserWithDetailsAsync(int userId);
+        
+        Task<Route?> GetRouteByIdAsync(int id);
+
+        Task<Route?> GetRouteWithDetailsByIdAsync(int id, int userId);
 
         Task UpdateRouteSimplifiedAsync(Route route);
     }

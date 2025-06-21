@@ -12,14 +12,24 @@ namespace WebRoutes.Services.Routes.Implementation
             _routeRepository = routeRepository;
         }
 
-        public async Task<IEnumerable<Route>> GetAllRoutesAsync()
+        public async Task<IEnumerable<Route>> GetAllRoutesAsync(int userId)
         {
-            return await _routeRepository.GetRoutesWithDetailsAsync();
+            return await _routeRepository.GetRoutesWithDetailsAsync(userId);
+        }
+
+        public async Task<IEnumerable<Route>> GetAllRoutesForUserAsync(int userId)
+        {
+            return await _routeRepository.GetRoutesForUserWithDetailsAsync(userId);
         }
 
         public async Task<Route?> GetRouteByIdAsync(int id)
         {
-            return await _routeRepository.GetRouteWithDetailsByIdAsync(id);
+            return await _routeRepository.GetRouteByIdAsync(id);
+        }
+
+        public async Task<Route?> GetRouteWithDetailsByIdAsync(int id, int userId)
+        {
+            return await _routeRepository.GetRouteWithDetailsByIdAsync(id, userId);
         }
 
         public async Task CreateRouteAsync(Route route)

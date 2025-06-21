@@ -7,9 +7,11 @@ namespace WebRoutes.Services.Routes;
 
 public interface IRouteService
 {
-    Task<IEnumerable<RouteCardResponseDto>> GetAllRoutesAsync();
-        
-    Task<RoutePostResponseDto> GetRouteByIdAsync(int id);
+    Task<IEnumerable<RouteCardResponseDto>> GetAllRoutesAsync(int userId);
+
+    Task<IEnumerable<RouteCardUserResponseDto>> GetAllRoutesForUserAsync(int userId);
+    
+    Task<RoutePostResponseDto> GetRouteByIdAsync(int id, int userId);
         
     Task<HttpResponseMessage> CreateRouteByRequestAsync(RouteCreateRequestDto routeCreateRequest);
         

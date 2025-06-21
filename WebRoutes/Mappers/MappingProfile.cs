@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WebRoutes.Dtos.RequestDtos;
 using WebRoutes.Dtos.RequestDtos.AdditionalPlaces;
+using WebRoutes.Dtos.RequestDtos.Marks;
 using WebRoutes.Dtos.RequestDtos.Places;
 using WebRoutes.Dtos.RequestDtos.Routes;
 using WebRoutes.Dtos.RequestDtos.User;
@@ -64,12 +65,19 @@ namespace WebRoutes.Mappers
                 .ForMember(dest => dest.RouteRating, opt => opt.MapFrom(src => src.Rating))
                 .ForMember(dest => dest.RouteType, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.DateUploaded))
-                //.ForMember(dest => dest.IsFavorite, opt => opt.MapFrom(src => src.Marks.Any(m => m.MarkType == MarkType.Liked && m.UserId == (int)context.Items["CurrentUserId"])))
+                .ForMember(dest => dest.IsFavorite, opt => opt.MapFrom(src => src.Marks!.Any(m => m.MarkType == MarkType.Liked)))
                 .ReverseMap();
             CreateMap<Route, RouteCardResponseDto>()
                 .ForMember(dest => dest.RouteInfo, opt => opt.MapFrom(src => src))
                 .ForMember(dest => dest.UserInfo, opt => opt.MapFrom(src => src.User))
-                .ForMember(dest => dest.UserCount, opt => opt.MapFrom(src => src.Marks.Count(m => m.MarkType == MarkType.Done)))
+                .ForMember(dest => dest.UserCount, opt => opt.MapFrom(src => src.Marks!.Count(m => m.MarkType == MarkType.Done)))
+                .ReverseMap();
+            CreateMap<Route, RouteCardUserResponseDto>()
+                .ForMember(dest => dest.RouteInfo, opt => opt.MapFrom(src => src))
+                .ForMember(dest => dest.IsDone, opt => opt.MapFrom(src => src.Marks!.Any(m => m.MarkType == MarkType.Done)))
+                .ForMember(dest => dest.IsMine, opt => opt.MapFrom(src => src.Marks!.Any(m => m.MarkType == MarkType.Mine)))
+                .ForMember(dest => dest.UserInfo, opt => opt.MapFrom(src => src.User))
+                .ForMember(dest => dest.UserCount, opt => opt.MapFrom(src => src.Marks!.Count(m => m.MarkType == MarkType.Done)))
                 .ReverseMap();
             CreateMap<Route, RoutePostResponseDto>()
                 .ForMember(dest => dest.RouteInfo, opt => opt.MapFrom(src => src))
@@ -88,7 +96,8 @@ namespace WebRoutes.Mappers
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.RouteType))
                 .ForMember(dest => dest.DateUploaded, opt => opt.MapFrom(src => src.CreatedAt))
                 .ForMember(dest => dest.Places, opt => opt.MapFrom(src => src.PlacesInfos))
-                .ForMember(dest => dest.AdditionalPlaces, opt => opt.MapFrom(src => src.AdditionalPlacesInfos));
+                .ForMember(dest => dest.AdditionalPlaces, opt => opt.MapFrom(src => src.AdditionalPlacesInfos))
+                .ForMember(dest => dest.Marks, opt => opt.MapFrom(src => new List<Mark>()));
             CreateMap<RouteUpdateRequestDto, Route>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.RouteTitle))
@@ -121,7 +130,9 @@ namespace WebRoutes.Mappers
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
-
+            
+            CreateMap<MarkCreateRequestDto, Mark>().ReverseMap();
+            
             CreateMap<Subscription, SubscriptionResponseDto>().ReverseMap();
         }
     }

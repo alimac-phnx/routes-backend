@@ -27,7 +27,7 @@ namespace WebRoutes.Controllers
                 return BadRequest("Mark could not be created.");
             }
     
-            return Ok("Route created successfully.");
+            return Ok("Mark created successfully.");
         }
 
         [HttpDelete("delete/{id}")]

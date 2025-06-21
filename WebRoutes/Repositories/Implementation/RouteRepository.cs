@@ -9,15 +9,31 @@ namespace WebRoutes.Repositories.implementation
     {
         public RouteRepository(ApplicationDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Route>> GetRoutesWithDetailsAsync()
+        public async Task<IEnumerable<Route>> GetRoutesWithDetailsAsync(int userId)
         {
             return await _context.Routes
                 .Include(r => r.User)
-                .Include(r => r.Marks)
+                .Include(r => r.Marks!.Where(m => m.UserId == userId))
                 .ToListAsync();
         }
         
-        public async Task<Route?> GetRouteWithDetailsByIdAsync(int id)
+        public async Task<IEnumerable<Route>> GetRoutesForUserWithDetailsAsync(int userId)
+        {
+            return await _context.Routes
+                .Where(r => r.Marks!.Any(m => m.UserId == userId))
+                .Include(r => r.Marks!.Where(m => m.UserId == userId))
+                .ToListAsync();
+        }
+        
+        public async Task<Route?> GetRouteByIdAsync(int id)
+        {
+            return await _context.Routes
+                .Include(r => r.User)
+                .Include(r => r.Places)
+                .FirstOrDefaultAsync(r => r.Id == id);
+        }
+        
+        public async Task<Route?> GetRouteWithDetailsByIdAsync(int id, int userId)
         {
             return await _context.Routes
                 .Include(r => r.User)
@@ -27,7 +43,7 @@ namespace WebRoutes.Repositories.implementation
                 .ThenInclude(ap => ap.Point)
                 .ThenInclude(p => p.Coordinate)
                 .Include(r => r.RoutePath)
-                .Include(r => r.Marks)
+                .Include(r => r.Marks!.Where(m => m.UserId == userId))
                 .Include(r => r.Reviews)
                 .FirstOrDefaultAsync(r => r.Id == id);
         }

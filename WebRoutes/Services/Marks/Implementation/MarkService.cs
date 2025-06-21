@@ -21,7 +21,7 @@ public class MarkService : IMarkService
     public async Task<HttpResponseMessage> CreateMarkAsync(MarkCreateRequestDto markCreateRequest)
     {
         var mark = _mapper.Map<Mark>(markCreateRequest);
-        if (await _markValidationService.IsMarkValid(mark))
+        if (!await _markValidationService.IsMarkValid(mark))
         {
             return new HttpResponseMessage(HttpStatusCode.BadRequest);
         }

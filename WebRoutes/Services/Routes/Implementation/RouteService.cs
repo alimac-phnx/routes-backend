@@ -2,10 +2,8 @@ using System.Net;
 using AutoMapper;
 using WebRoutes.Dtos.RequestDtos.Routes;
 using WebRoutes.Dtos.ResponseDtos.Route;
+using WebRoutes.Enums;
 using WebRoutes.Models;
-using WebRoutes.Services.AdditionalPlaces;
-using WebRoutes.Services.Places;
-using WebRoutes.Services.Users;
 using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Services.Routes.Implementation;
@@ -31,16 +29,23 @@ internal class RouteService : IRouteService
         _mapper = mapper;
     }
     
-    public async Task<IEnumerable<RouteCardResponseDto>> GetAllRoutesAsync()
+    public async Task<IEnumerable<RouteCardResponseDto>> GetAllRoutesAsync(int userId)
     {
-        var routes = await _routeDataService.GetAllRoutesAsync();
+        var routes = await _routeDataService.GetAllRoutesAsync(userId);
         
         return _mapper.Map<IEnumerable<RouteCardResponseDto>>(routes);
     }
 
-    public async Task<RoutePostResponseDto> GetRouteByIdAsync(int id)
+    public async Task<IEnumerable<RouteCardUserResponseDto>> GetAllRoutesForUserAsync(int userId)
     {
-        var route = await _routeDataService.GetRouteByIdAsync(id);
+        var routes = await _routeDataService.GetAllRoutesForUserAsync(userId);
+        
+        return _mapper.Map<IEnumerable<RouteCardUserResponseDto>>(routes);
+    }
+
+    public async Task<RoutePostResponseDto> GetRouteByIdAsync(int id, int userId)
+    {
+        var route = await _routeDataService.GetRouteWithDetailsByIdAsync(id, userId);
         
         return _mapper.Map<RoutePostResponseDto>(route);
     }
@@ -74,6 +79,12 @@ internal class RouteService : IRouteService
         route.Length = routeInfo.distance;
         route.Duration = routeInfo.time;
         route.RoutePath = routeInfo.coordinates;
+        
+        route.Marks!.Add(new Mark
+        {
+            MarkType = MarkType.Mine,
+            UserId = route.UserId,
+        });
         
         await _routeDataService.CreateRouteAsync(route);
         

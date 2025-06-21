@@ -18,7 +18,8 @@ public class RouteValidationService : IRouteValidationService
     {
         var user = await _userDataService.GetUserByIdAsync(route.UserId);
         
-        return await _routeDataService.GetRouteByIdAsync(route.Id) == null
+        return await _routeDataService.GetRouteByIdAsync(route.Id)
+               == null
                && user != null
                && route.Places.Count != 0;
     }

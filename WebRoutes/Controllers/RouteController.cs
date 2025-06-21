@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebRoutes.Dtos.RequestDtos.Routes;
 using WebRoutes.Dtos.ResponseDtos.Route;
 using WebRoutes.Services.Routes;
-using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Controllers
 {
@@ -22,14 +22,26 @@ namespace WebRoutes.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RouteCardResponseDto>>> GetRoutes()
         {
-            var routes = await _routeService.GetAllRoutesAsync();
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var routes = await _routeService.GetAllRoutesAsync(userId);
+            
+            return Ok(routes);
+        }
+        
+        [HttpGet("profile/")]
+        public async Task<ActionResult<IEnumerable<RouteCardUserResponseDto>>> GetUserRoutes()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var routes = await _routeService.GetAllRoutesForUserAsync(userId);
+            
             return Ok(routes);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<RoutePostResponseDto>> GetRoute(int id)
         {
-            var route = await _routeService.GetRouteByIdAsync(id);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var route = await _routeService.GetRouteByIdAsync(id, userId);
             
             if (route is null)
             {
