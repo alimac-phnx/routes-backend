@@ -5,7 +5,7 @@ namespace WebRoutes.Services.Reviews;
 
 public interface IReviewService
 {
-    Task<IEnumerable<ReviewResponseDto>> GetReviewsByRouteAsync(int routeId);
+    Task<IEnumerable<ReviewResponseDto>> GetReviewsByRouteAsync(int routeId, int pageNumber, int pageSize);
     
     Task<HttpResponseMessage> CreateReviewAsync(ReviewCreateRequestDto reviewCreateRequest);
 

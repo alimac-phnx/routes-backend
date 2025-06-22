@@ -7,9 +7,9 @@ namespace WebRoutes.Services.Routes;
 
 public interface IRouteService
 {
-    Task<IEnumerable<RouteCardResponseDto>> GetAllRoutesAsync(int userId);
+    Task<IEnumerable<RouteCardResponseDto>> GetAllRoutesAsync(int userId, int pageNumber, int pageSize);
 
-    Task<IEnumerable<RouteCardUserResponseDto>> GetAllRoutesForUserAsync(int id, int currentUserId);
+    Task<IEnumerable<RouteCardUserResponseDto>> GetAllRoutesForUserAsync(int id, int currentUserId, int pageNumber, int pageSize);
     
     Task<RoutePostResponseDto> GetRouteByIdAsync(int id, int userId);
         

@@ -5,13 +5,13 @@ namespace WebRoutes.Repositories
 {
     internal interface IRouteRepository : IRepository<Route>
     {
-        Task<IEnumerable<Route>> GetRoutesWithDetailsAsync(int userId);
+        Task<IEnumerable<Route>> GetRoutesWithDetailsAsync(int userId, int pageNumber, int pageSize);
 
-        Task<IEnumerable<Route>> GetUserFavoriteRoutesAsync(int id, int currentUserId);
+        Task<IEnumerable<Route>> GetUserMarkedRoutesAsync(int id, int currentUserId, int pageNumber, int pageSize);
 
-        Task<IEnumerable<Route>> GetUserDoneRoutesAsync(int id, int currentUserId);
+        Task<IEnumerable<Route>> GetUserDoneRoutesAsync(int id, int currentUserId, int pageNumber, int pageSize);
 
-        Task<IEnumerable<Route>> GetUserCreatedRoutesAsync(int id, int currentUserId);
+        Task<IEnumerable<Route>> GetUserCreatedRoutesAsync(int id, int currentUserId, int pageNumber, int pageSize);
         
         Task<Route?> GetRouteByIdAsync(int id);
 

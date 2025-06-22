@@ -17,9 +17,9 @@ public class ReviewDataService : IReviewDataService
         return await _reviewRepository.GetByIdAsync(id);
     }
 
-    public async Task<IEnumerable<Review>> GetReviewsByRouteAsync(int routeId)
+    public async Task<IEnumerable<Review>> GetReviewsByRouteAsync(int routeId, int pageNumber, int pageSize)
     {
-        return await _reviewRepository.GetReviewsByRouteIdAsync(routeId);
+        return await _reviewRepository.GetReviewsByRouteIdAsync(routeId, pageNumber, pageSize);
     }
 
     public async Task CreateReviewAsync(Review review)

@@ -9,6 +9,7 @@ using WebRoutes.Dtos.RequestDtos.Routes;
 using WebRoutes.Dtos.RequestDtos.Users;
 using WebRoutes.Dtos.ResponseDtos;
 using WebRoutes.Dtos.ResponseDtos.AdditionalPlace;
+using WebRoutes.Dtos.ResponseDtos.Common;
 using WebRoutes.Dtos.ResponseDtos.Place;
 using WebRoutes.Dtos.ResponseDtos.Reviews;
 using WebRoutes.Dtos.ResponseDtos.Route;
@@ -68,7 +69,15 @@ namespace WebRoutes.Mappers
                 .ForMember(dest => dest.RouteRating, opt => opt.MapFrom(src => src.Rating))
                 .ForMember(dest => dest.RouteType, opt => opt.MapFrom(src => src.Type))
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.DateUploaded))
-                .ForMember(dest => dest.IsFavorite, opt => opt.MapFrom(src => src.Marks!.Any(m => m.MarkType == MarkType.Liked)))
+                .ForMember(dest => dest.UserLike, opt => opt.MapFrom(src =>
+                    src.Marks!
+                        .Where(m => m.MarkType == MarkType.Liked)
+                        .Select(m => new UserLike
+                        {
+                            MarkId = m.Id,
+                            IsUserFavorite = true
+                        })
+                        .FirstOrDefault()))
                 .ReverseMap();
             CreateMap<Route, RouteCardResponseDto>()
                 .ForMember(dest => dest.RouteInfo, opt => opt.MapFrom(src => src))
@@ -77,8 +86,12 @@ namespace WebRoutes.Mappers
                 .ReverseMap();
             CreateMap<Route, RouteCardUserResponseDto>()
                 .ForMember(dest => dest.RouteInfo, opt => opt.MapFrom(src => src))
-                .ForMember(dest => dest.IsDone, opt => opt.MapFrom(src => src.Marks!.Any(m => m.MarkType == MarkType.Done)))
-                .ForMember(dest => dest.IsMine, opt => opt.MapFrom(src => src.Marks!.Any(m => m.MarkType == MarkType.Mine)))
+                .ForMember(dest => dest.UserMarks, opt => opt.MapFrom(src => src.Marks!
+                    .Select(m => new UserMark
+                    {
+                        MarkId = m.Id,
+                        MarkType = m.MarkType
+                    }).ToList()))
                 .ForMember(dest => dest.UserInfo, opt => opt.MapFrom(src => src.User))
                 .ForMember(dest => dest.UserCount, opt => opt.MapFrom(src => src.Marks!.Count(m => m.MarkType == MarkType.Done)))
                 .ReverseMap();

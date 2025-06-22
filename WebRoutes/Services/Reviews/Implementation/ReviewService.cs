@@ -22,9 +22,9 @@ public class ReviewService : IReviewService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<ReviewResponseDto>> GetReviewsByRouteAsync(int routeId)
+    public async Task<IEnumerable<ReviewResponseDto>> GetReviewsByRouteAsync(int routeId, int pageNumber, int pageSize)
     {
-        var reviews = await _reviewDataService.GetReviewsByRouteAsync(routeId);
+        var reviews = await _reviewDataService.GetReviewsByRouteAsync(routeId, pageNumber, pageSize);
         
         return _mapper.Map<IEnumerable<ReviewResponseDto>>(reviews);
     }

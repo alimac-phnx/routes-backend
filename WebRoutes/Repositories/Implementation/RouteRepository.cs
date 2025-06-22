@@ -9,43 +9,52 @@ namespace WebRoutes.Repositories.implementation
     {
         public RouteRepository(ApplicationDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Route>> GetRoutesWithDetailsAsync(int userId)
+        public async Task<IEnumerable<Route>> GetRoutesWithDetailsAsync(int userId, int pageNumber, int pageSize)
         {
             return await _context.Routes
                 .Include(r => r.User)
                 .Include(r => r.Marks!.Where(m => m.UserId == userId || m.MarkType == MarkType.Done))
                 .Include(r => r.Places)
                 .Include(r => r.AdditionalPlaces)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
         }
         
-        public async Task<IEnumerable<Route>> GetUserFavoriteRoutesAsync(int id, int currentUserId)
+        public async Task<IEnumerable<Route>> GetUserMarkedRoutesAsync(int id, int currentUserId, int pageNumber, int pageSize)
         {
             return await _context.Routes
-                .Where(r => r.Marks!.Any(m => m.UserId == id && m.MarkType == MarkType.Liked))
-                .Include(r => r.Marks!.Where(m => m.UserId == currentUserId))
+                .Where(r => r.Marks!
+                    .Any(m => m.UserId == id))
+                .Include(r => r.Marks!.Where(m => m.UserId == id || (m.UserId == currentUserId && m.MarkType == MarkType.Liked)))
                 .Include(r => r.Places)
                 .Include(r => r.AdditionalPlaces)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
         }
         
-        public async Task<IEnumerable<Route>> GetUserDoneRoutesAsync(int id, int currentUserId)
+        public async Task<IEnumerable<Route>> GetUserDoneRoutesAsync(int id, int currentUserId, int pageNumber, int pageSize)
         {
             return await _context.Routes
                 .Where(r => r.Marks!.Any(m => m.UserId == id && m.MarkType == MarkType.Done))
                 .Include(r => r.Marks!.Where(m => m.UserId == currentUserId))
                 .Include(r => r.Places)
                 .Include(r => r.AdditionalPlaces)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
         }
         
-        public async Task<IEnumerable<Route>> GetUserCreatedRoutesAsync(int id, int currentUserId)
+        public async Task<IEnumerable<Route>> GetUserCreatedRoutesAsync(int id, int currentUserId, int pageNumber, int pageSize)
         {
             return await _context.Routes
                 .Where(r => r.Marks!.Any(m => m.UserId == id && m.MarkType == MarkType.Mine))
                 .Include(r => r.Marks!.Where(m => m.UserId == currentUserId))
                 .Include(r => r.Places)
                 .Include(r => r.AdditionalPlaces)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
         }
         
@@ -63,6 +72,7 @@ namespace WebRoutes.Repositories.implementation
                 .Include(r => r.User)
                 .Include(r => r.Places)
                 .ThenInclude(p => p.Point)
+                .ThenInclude(p => p.Coordinate)
                 .Include(r => r.AdditionalPlaces)!
                 .ThenInclude(ap => ap.Point)
                 .ThenInclude(p => p.Coordinate)

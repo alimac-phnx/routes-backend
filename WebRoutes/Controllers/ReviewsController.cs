@@ -19,9 +19,9 @@ public class ReviewsController : ControllerBase
     }
         
     [HttpGet("route/{id}")]
-    public async Task<ActionResult<IEnumerable<ReviewResponseDto>>> GetRouteReviews(int id)
+    public async Task<ActionResult<IEnumerable<ReviewResponseDto>>> GetRouteReviews(int id, int pageNumber = 1, int pageSize = 10)
     {
-        var reviews = await _reviewService.GetReviewsByRouteAsync(id);
+        var reviews = await _reviewService.GetReviewsByRouteAsync(id, pageNumber, pageSize);
             
         return Ok(reviews);
     }

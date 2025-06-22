@@ -4,5 +4,15 @@ public enum AdditionalPlaceType
 {
     Monument,
     Museum,
-    Galery
+    ArchitecturalStructure,
+    ReligiousSite,
+    RecreationArea,
+    BeautifulPlace,
+    Souvenirs,
+    Shopping,
+    Entertainments,
+    Restaurant,
+    Cafe,
+    Bar,
+    CoffeeShop
 }

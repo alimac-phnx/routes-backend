@@ -88,6 +88,8 @@ builder.Services.AddScoped<IUserCreatingService, UserCreatingService>();
 builder.Services.AddScoped<IRouteRepository, RouteRepository>();
 builder.Services.AddScoped<IRouteService, RouteService>();
 builder.Services.AddScoped<IRouteDataService, RouteDataService>();
+builder.Services.AddScoped<IRouteCreatingService, RouteCreatingService>();
+builder.Services.AddScoped<IRouteMapper, RouteMapper>();
 builder.Services.AddScoped<IRouteValidationService, RouteValidationService>();
 
 builder.Services.AddScoped<IImageStorageService, ImageStorageService>();

@@ -2,8 +2,7 @@ using System.Net;
 using AutoMapper;
 using WebRoutes.Dtos.RequestDtos.Routes;
 using WebRoutes.Dtos.ResponseDtos.Route;
-using WebRoutes.Enums;
-using WebRoutes.Models;
+using WebRoutes.Mappers;
 using Route = WebRoutes.Models.Route;
 
 namespace WebRoutes.Services.Routes.Implementation;
@@ -12,35 +11,35 @@ internal class RouteService : IRouteService
 {
     private readonly IRouteDataService _routeDataService;
     private readonly IRouteValidationService _routeValidationService;
-    private readonly IImageStorageService _imageStorageService;
-    private readonly IRouteBuilder _routeBuilder;
+    private readonly IRouteCreatingService _routeCreatingService;
+    private readonly IRouteMapper _routeMapper;
     private readonly IMapper _mapper;
 
     public RouteService(IRouteDataService routeDataService,
         IRouteValidationService routeValidationService,
-        IImageStorageService imageStorageService,
-        IRouteBuilder routeBuilder,
+        IRouteCreatingService routeCreatingService,
+        IRouteMapper routeMapper,
         IMapper mapper)
     {
         _routeDataService = routeDataService;
         _routeValidationService = routeValidationService;
-        _imageStorageService = imageStorageService;
-        _routeBuilder = routeBuilder;
+        _routeCreatingService = routeCreatingService;
+        _routeMapper = routeMapper;
         _mapper = mapper;
     }
     
-    public async Task<IEnumerable<RouteCardResponseDto>> GetAllRoutesAsync(int userId)
+    public async Task<IEnumerable<RouteCardResponseDto>> GetAllRoutesAsync(int userId, int pageNumber, int pageSize)
     {
-        var routes = await _routeDataService.GetAllRoutesAsync(userId);
+        var routes = await _routeDataService.GetAllRoutesAsync(userId, pageNumber, pageSize);
         
         return _mapper.Map<IEnumerable<RouteCardResponseDto>>(routes);
     }
 
-    public async Task<IEnumerable<RouteCardUserResponseDto>> GetAllRoutesForUserAsync(int id, int currentUserId)
+    public async Task<IEnumerable<RouteCardUserResponseDto>> GetAllRoutesForUserAsync(int id, int currentUserId, int pageNumber, int pageSize)
     {
-        var routes = await _routeDataService.GetAllRoutesForUserAsync(id, currentUserId);
+        var routes = await _routeDataService.GetAllRoutesForUserAsync(id, currentUserId, pageNumber, pageSize);
         
-        return _mapper.Map<IEnumerable<RouteCardUserResponseDto>>(routes);
+        return _routeMapper.MapMarks(routes.ToList(), currentUserId, id);;
     }
 
     public async Task<RoutePostResponseDto> GetRouteByIdAsync(int id, int userId)
@@ -58,39 +57,11 @@ internal class RouteService : IRouteService
             return new HttpResponseMessage(HttpStatusCode.BadRequest);
         }
         
-        var placesImages = routeCreateRequestDto.PlacesInfos
-            .Select(pi => pi.LocationCreateInfo.LocationImage).ToList();
-        var additionalPlacesImages = routeCreateRequestDto.AdditionalPlacesInfos?
-            .Select(pi => pi.LocationCreateInfo.LocationImage).ToList();
-
-        var placeImageUrls = placesImages.Select(placeImage =>
-            placeImage != null ? _imageStorageService.UploadImageAsync(placeImage) : null).ToList();
-
-        route.Places.ToList().ForEach(place => placeImageUrls.ForEach(imageUrl => place.ImageUrl = imageUrl ));
-        
-        var additionalPlacesImagesUrls = additionalPlacesImages?.Select(additionalPlaceImage =>
-            additionalPlaceImage != null ? _imageStorageService.UploadImageAsync(additionalPlaceImage) : null).ToList();
-        
-        route.AdditionalPlaces?.ToList().ForEach(additionalPlace => additionalPlacesImagesUrls?
-            .ForEach(imageUrl => additionalPlace.ImageUrl = imageUrl ));
-
-        var routeInfo = await _routeBuilder.BuildAsync(route.Places.ToList());
-
-        route.Length = routeInfo.distance;
-        route.Duration = routeInfo.time;
-        route.RoutePath = routeInfo.coordinates;
-        
-        route.Marks!.Add(new Mark
-        {
-            MarkType = MarkType.Mine,
-            UserId = route.UserId,
-        });
-        
-        await _routeDataService.CreateRouteAsync(route);
+        var routeData = await _routeCreatingService.CreateRouteDataAsync(routeCreateRequestDto, route);
+        await _routeDataService.CreateRouteAsync(routeData);
         
         return new HttpResponseMessage(HttpStatusCode.Created);
     }
-    
     
 
     public async Task<HttpResponseMessage> UpdateRouteByRequestAsync(int id, RouteUpdateRequestDto routeUpdateRequest)

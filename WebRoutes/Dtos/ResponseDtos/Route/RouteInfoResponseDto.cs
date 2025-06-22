@@ -1,3 +1,4 @@
+using WebRoutes.Dtos.ResponseDtos.Common;
 using WebRoutes.Enums;
 
 namespace WebRoutes.Dtos.ResponseDtos.Route;
@@ -22,5 +23,5 @@ public class RouteInfoResponseDto
     
     public float RouteRating { get; set; }
     
-    public bool IsFavorite { get; set; }
+    public UserLike? UserLike { get; set; }
 }
