@@ -2,8 +2,12 @@
 
 namespace WebRoutes.Repositories
 {
-    public interface IUserRepository : IRepository<User>
+    internal interface IUserRepository : IRepository<User>
     {
         Task<User?> GetUserWithRoutesAsync(int id);
+
+        Task<User?> GetUserProfileAsync(int id);
+
+        Task<User?> GetUserByEmailAsync(string email);
     }
 }

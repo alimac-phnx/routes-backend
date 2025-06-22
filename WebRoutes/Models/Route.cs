@@ -1,39 +1,39 @@
 ﻿using WebRoutes.Enums;
-using WebRoutes.Migrations;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebRoutes.Models
 {
     public class Route
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
 
-        public int UserId { get; set; }
+        public int UserId { get; init; }
 
-        public User User { get; set; } = null!;
+        public required User User { get; init; }
 
-        public string Name { get; set; } = string.Empty;
+        public required string Name { get; init; }
 
-        public RouteType Type { get; set; }
+        public RouteType Type { get; init; }
         
-        public string Theme { get; set; } = string.Empty;
-        
-        public string? Description { get; set; }
+        public string? Description { get; init; }
         
         public float Length { get; set; }
         
-        public TimeSpan Duration { get; set; }
+        public float Duration { get; set; }
         
-        public RouteDifficulty Difficulty { get; set; }
+        public ICollection<Coordinate>? RoutePath { get; set; }
         
-        public float Rating { get; set; }
+        public RouteDifficulty Difficulty { get; init; }
         
-        public string ListOfPoints { get; set; } = string.Empty;
+        public float Rating { get; init; }
         
-        public DateTime DateUploaded { get; set; }
-
-        public ICollection<Place> Places { get; set; } = new List<Place>();
+        public DateTime DateUploaded { get; init; }
         
-        public ICollection<AdditionalPlace> AdditionalPlaces { get; set; } = new List<AdditionalPlace>();
+        public required ICollection<Place> Places { get; init; }
+        
+        public ICollection<AdditionalPlace>? AdditionalPlaces { get; init; }
+        
+        public ICollection<Review>? Reviews { get; init; }
+        
+        public ICollection<Mark>? Marks { get; init; }
     }
 }

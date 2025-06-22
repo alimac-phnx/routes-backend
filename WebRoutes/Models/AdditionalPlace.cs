@@ -2,7 +2,7 @@
 
 namespace WebRoutes.Models
 {
-    public class AdditionalPlace : BasePlace
+    public class AdditionalPlace : Location
     {
         public AdditionalPlaceType Type { get; set; }
     }

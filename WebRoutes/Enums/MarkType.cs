@@ -1,9 +1,8 @@
-﻿namespace WebRoutes.Enums
+﻿namespace WebRoutes.Enums;
+
+public enum MarkType
 {
-    public enum MarkType
-    {
-        Like,
-        Save,
-        Done
-    }
+    Mine,
+    Done,
+    Liked,
 }

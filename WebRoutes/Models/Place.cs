@@ -1,6 +1,6 @@
 ﻿namespace WebRoutes.Models
 {
-    public class Place : BasePlace
+    public class Place : Location
     {
         public int? OrderOfVisit { get; set; }
     }
