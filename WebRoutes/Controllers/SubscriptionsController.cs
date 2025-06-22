@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebRoutes.Dtos.ResponseDtos;
 using WebRoutes.Services.Subscriptions;
@@ -16,37 +17,43 @@ public class SubscriptionsController : ControllerBase
         _subscriptionService = subscriptionService;
     }
 
-    [HttpGet("{userId}")]
-    public async Task<ActionResult<IEnumerable<SubscriptionResponseDto>>> GetSubscriptions(int userId)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<SubscriptionResponseDto>>> GetSubscriptions()
     {
-        var subscriptions = await _subscriptionService.GetAllSubscriptionsAsync(userId);
+        var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var subscriptions = await _subscriptionService.GetAllSubscriptionsAsync(currentUserId);
+        
         return Ok(subscriptions);
     }
 
-    [HttpGet("followers/{userId}")]
-    public async Task<ActionResult<IEnumerable<SubscriptionResponseDto>>> GetFollowers(int userId)
+    [HttpGet("followers")]
+    public async Task<ActionResult<IEnumerable<SubscriptionResponseDto>>> GetFollowers()
     {
-        var followers = await _subscriptionService.GetAllFollowersAsync(userId);
+        var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var followers = await _subscriptionService.GetAllFollowersAsync(currentUserId);
+        
         return Ok(followers);
     }
 
-    [HttpPost("create")]
-    public async Task<ActionResult> CreateSubscriptionAsync(int subscriberId, int followeeId)
+    [HttpPost("create/{followerId}")]
+    public async Task<ActionResult> CreateSubscriptionAsync(int followeeId)
     {
-        var response = await _subscriptionService.CreateSubscriptionAsync(subscriberId, followeeId);
+        var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var response = await _subscriptionService.CreateSubscriptionAsync(currentUserId, followeeId);
 
         if (!response.IsSuccessStatusCode)
         {
             return BadRequest("Subscription could not be created.");
         }
         
-        return CreatedAtAction(nameof(GetSubscriptions), new { userId = subscriberId });
+        return Ok("Subscription created successfully.");
     }
 
-    [HttpDelete("delete/{subscriberId}/{followeeId}")]
-    public async Task<ActionResult> DeleteSubscription(int subscriberId, int followeeId)
+    [HttpDelete("delete/{followeeId}")]
+    public async Task<ActionResult> DeleteSubscription(int followeeId)
     {
-        var response = await _subscriptionService.DeleteSubscriptionAsync(subscriberId, followeeId);
+        var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var response = await _subscriptionService.DeleteSubscriptionAsync(currentUserId, followeeId);
         
         if (!response.IsSuccessStatusCode)
         {

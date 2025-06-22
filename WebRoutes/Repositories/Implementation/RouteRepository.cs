@@ -13,7 +13,7 @@ namespace WebRoutes.Repositories.implementation
         {
             return await _context.Routes
                 .Include(r => r.User)
-                .Include(r => r.Marks!.Where(m => m.UserId == userId))
+                .Include(r => r.Marks!.Where(m => m.UserId == userId || m.MarkType == MarkType.Done))
                 .Include(r => r.Places)
                 .Include(r => r.AdditionalPlaces)
                 .ToListAsync();

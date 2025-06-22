@@ -1,7 +1,6 @@
 using WebRoutes.Dtos.ResponseDtos.AdditionalPlace;
 using WebRoutes.Dtos.ResponseDtos.Place;
 using WebRoutes.Models;
-using Point = WebRoutes.Models.Point;
 
 namespace WebRoutes.Dtos.ResponseDtos.Route;
 

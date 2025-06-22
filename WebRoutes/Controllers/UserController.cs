@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebRoutes.Dtos.RequestDtos.Users;
 using WebRoutes.Dtos.ResponseDtos.User;
@@ -25,7 +26,7 @@ namespace WebRoutes.Controllers
             return Ok(users);
         }
 
-        [HttpGet("profile/{id}")]
+        [HttpGet("{id}/profile")]
         public async Task<ActionResult<UserProfileResponseDto>> GetUserProfile(int id)
         {
             var user = await _userService.GetUserProfileByIdAsync(id);
@@ -36,10 +37,11 @@ namespace WebRoutes.Controllers
             return Ok(user);
         }
 
-        [HttpPut("update/{id}")]
-        public async Task<ActionResult> UpdateUser(int id, UserUpdateRequestDto userUpdateRequestDto)
+        [HttpPut("update")]
+        public async Task<ActionResult> UpdateUser(UserUpdateRequestDto userUpdateRequestDto)
         {
-            var response = await _userService.UpdateUserAsync(id, userUpdateRequestDto);
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var response = await _userService.UpdateUserAsync(currentUserId, userUpdateRequestDto);
             if (!response.IsSuccessStatusCode)
             {
                 return BadRequest("User does not exist.");
@@ -48,10 +50,11 @@ namespace WebRoutes.Controllers
             return Ok();
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete")]
         public async Task<ActionResult> DeleteUser(int id)
         {
-            await _userService.DeleteUserAsync(id);
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            await _userService.DeleteUserAsync(currentUserId);
             return NoContent();
         }
     }

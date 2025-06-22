@@ -32,7 +32,7 @@ public class AuthController : ControllerBase
             return BadRequest("User could not be registered.");
         }
     
-        return NoContent();
+        return Ok();
     }
 
     [HttpPost("login")]
