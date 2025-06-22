@@ -4,11 +4,13 @@ using WebRoutes.Dtos.RequestDtos.AdditionalPlaces;
 using WebRoutes.Dtos.RequestDtos.Auth;
 using WebRoutes.Dtos.RequestDtos.Marks;
 using WebRoutes.Dtos.RequestDtos.Places;
+using WebRoutes.Dtos.RequestDtos.Reviews;
 using WebRoutes.Dtos.RequestDtos.Routes;
 using WebRoutes.Dtos.RequestDtos.Users;
 using WebRoutes.Dtos.ResponseDtos;
 using WebRoutes.Dtos.ResponseDtos.AdditionalPlace;
 using WebRoutes.Dtos.ResponseDtos.Place;
+using WebRoutes.Dtos.ResponseDtos.Reviews;
 using WebRoutes.Dtos.ResponseDtos.Route;
 using WebRoutes.Dtos.ResponseDtos.User;
 using WebRoutes.Enums;
@@ -130,6 +132,9 @@ namespace WebRoutes.Mappers
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
             
             CreateMap<MarkCreateRequestDto, Mark>().ReverseMap();
+            
+            CreateMap<ReviewResponseDto, Review>().ReverseMap();
+            CreateMap<ReviewCreateRequestDto, Review>().ReverseMap();
             
             CreateMap<Subscription, SubscriptionResponseDto>().ReverseMap();
         }

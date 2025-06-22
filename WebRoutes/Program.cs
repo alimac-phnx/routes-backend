@@ -17,12 +17,10 @@ using WebRoutes.Services.Subscriptions.Implementation;
 using WebRoutes.Services.Users;
 using WebRoutes.Services.Users.Implementation;
 using Route = WebRoutes.Models.Route;
-using WebRoutes.Services.AdditionalPlaces;
-using WebRoutes.Services.AdditionalPlaces.Implementation;
 using WebRoutes.Services.Marks;
 using WebRoutes.Services.Marks.Implementation;
-using WebRoutes.Services.Places;
-using WebRoutes.Services.Places.Implementation;
+using WebRoutes.Services.Reviews;
+using WebRoutes.Services.Reviews.Implementation;
 using IRouteBuilder = WebRoutes.Services.Routes.IRouteBuilder;
 using RouteBuilder = WebRoutes.Services.Routes.Implementation.RouteBuilder;
 
@@ -64,17 +62,18 @@ builder.Services.Configure<DefaultPhotoSettings>(
 builder.Services.AddScoped<IRepository<Route>, Repository<Route>>();
 builder.Services.AddScoped<IRepository<Place>, Repository<Place>>();
 
-builder.Services.AddScoped<IRouteRepository, RouteRepository>();
-builder.Services.AddScoped<IRouteDataService, RouteDataService>();
-
 builder.Services.AddScoped<ILocationRepository<Place>, LocationRepository<Place>>();
-
 builder.Services.AddScoped<ILocationRepository<AdditionalPlace>, LocationRepository<AdditionalPlace>>();
 
 builder.Services.AddScoped<IMarkRepository, MarkRepository>();
 builder.Services.AddScoped<IMarkDataService, MarkDataService>();
 builder.Services.AddScoped<IMarkService, MarkService>();
 builder.Services.AddScoped<IMarkValidationService, MarkValidationService>();
+
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IReviewDataService, ReviewDataService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IReviewValidationService, ReviewValidationService>();
 
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<ISubscriptionDataService, SubscriptionDataService>();
@@ -86,12 +85,7 @@ builder.Services.AddScoped<IUserDataService, UserDataService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserCreatingService, UserCreatingService>();
 
-builder.Services.AddScoped<IPlaceService, PlaceService>();
-builder.Services.AddScoped<IPlaceDataService, PlaceDataService>();
-
-builder.Services.AddScoped<IAdditionalPlaceService, AdditionalPlaceService>();
-builder.Services.AddScoped<IAdditionalPlaceDataService, AdditionalPlaceDataService>();
-
+builder.Services.AddScoped<IRouteRepository, RouteRepository>();
 builder.Services.AddScoped<IRouteService, RouteService>();
 builder.Services.AddScoped<IRouteDataService, RouteDataService>();
 builder.Services.AddScoped<IRouteValidationService, RouteValidationService>();
