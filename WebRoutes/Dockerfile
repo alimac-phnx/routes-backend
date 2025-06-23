@@ -9,6 +9,10 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["WebRoutes/WebRoutes.csproj", "WebRoutes/"]
 RUN dotnet restore "WebRoutes/WebRoutes.csproj"
+
+RUN dotnet tool install --global dotnet-ef --version 9.*
+ENV PATH="$PATH:/root/.dotnet/tools"
+
 COPY . .
 WORKDIR "/src/WebRoutes"
 RUN dotnet build "WebRoutes.csproj" -c $BUILD_CONFIGURATION -o /app/build
