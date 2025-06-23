@@ -17,6 +17,11 @@ COPY . .
 WORKDIR "/src/WebRoutes"
 RUN dotnet build "WebRoutes.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
+FROM build AS migrate
+WORKDIR "/src/WebRoutes"
+RUN dotnet ef migrations add Initial --no-build
+RUN dotnet ef database update --no-build
+
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "WebRoutes.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
