@@ -14,5 +14,5 @@ public interface IUserService
         
     Task<HttpResponseMessage> UpdateUserAsync(int id, UserUpdateRequestDto userUpdateRequest);
         
-    Task DeleteUserAsync(int id);
+    Task<HttpResponseMessage> DeleteUserAsync(int id);
 }

@@ -31,13 +31,17 @@ public class MarkService : IMarkService
         return new HttpResponseMessage(HttpStatusCode.Created);
     }
     
-    public async Task DeleteMarkAsync(int id)
+    public async Task<HttpResponseMessage> DeleteMarkAsync(int id)
     {
         var mark = await _markDataService.GetMarkByIdAsync(id);
         
-        if (mark != null)
+        if (mark == null)
         {
-            await _markDataService.DeleteMarkAsync(mark);
+            return new HttpResponseMessage(HttpStatusCode.BadRequest);
         }
+        
+        await _markDataService.DeleteMarkAsync(mark);
+        
+        return new HttpResponseMessage(HttpStatusCode.NoContent);
     }
 }

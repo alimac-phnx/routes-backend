@@ -6,5 +6,5 @@ public interface IMarkService
 {
     Task<HttpResponseMessage> CreateMarkAsync(MarkCreateRequestDto markCreateRequest);
 
-    Task DeleteMarkAsync(int id);
+    Task<HttpResponseMessage> DeleteMarkAsync(int id);
 }

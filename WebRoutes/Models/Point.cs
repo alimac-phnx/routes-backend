@@ -1,5 +1,3 @@
-using Coordinate = WebRoutes.Models.Coordinate;
-
 namespace WebRoutes.Models;
 
 public class Point

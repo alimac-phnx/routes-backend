@@ -54,7 +54,13 @@ namespace WebRoutes.Controllers
         public async Task<ActionResult> DeleteUser(int id)
         {
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            await _userService.DeleteUserAsync(currentUserId);
+            var response = await _userService.DeleteUserAsync(currentUserId);
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest("This user does not exist.");
+            }
+
             return NoContent();
         }
     }

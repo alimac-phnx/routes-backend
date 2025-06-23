@@ -61,11 +61,15 @@ public class UserService : IUserService
         return new HttpResponseMessage(HttpStatusCode.OK);
     }
 
-    public async Task DeleteUserAsync(int id)
+    public async Task<HttpResponseMessage> DeleteUserAsync(int id)
     {
-        if (await _userDataService.GetUserByIdAsync(id) != null)
+        if (await _userDataService.GetUserByIdAsync(id) == null)
         {
-            await _userDataService.DeleteUserAsync(id);
+            return new HttpResponseMessage(HttpStatusCode.BadRequest);
         }
+
+        await _userDataService.DeleteUserAsync(id);
+        
+        return new HttpResponseMessage(HttpStatusCode.NoContent);
     }
 }
