@@ -39,7 +39,7 @@ internal class RouteService : IRouteService
     {
         var routes = await _routeDataService.GetAllRoutesForUserAsync(id, currentUserId, pageNumber, pageSize);
         
-        return _routeMapper.MapMarks(routes.ToList(), currentUserId, id);;
+        return _routeMapper.MapMarks(routes.ToList(), id, currentUserId);;
     }
 
     public async Task<RoutePostResponseDto> GetRouteByIdAsync(int id, int userId)
