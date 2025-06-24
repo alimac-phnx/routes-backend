@@ -20,9 +20,9 @@ namespace WebRoutes.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserInfoResponseDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserInfoResponseDto>>> GetUsers(int pageNumber = 1, int pageSize = 10)
         {
-            var users = await _userService.GetAllUsersAsync();
+            var users = await _userService.GetAllUsersAsync(pageNumber, pageSize);
             return Ok(users);
         }
 
@@ -54,7 +54,13 @@ namespace WebRoutes.Controllers
         public async Task<ActionResult> DeleteUser(int id)
         {
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            await _userService.DeleteUserAsync(currentUserId);
+            var response = await _userService.DeleteUserAsync(currentUserId);
+            
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest("This user does not exist.");
+            }
+
             return NoContent();
         }
     }

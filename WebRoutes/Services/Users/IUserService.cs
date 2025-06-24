@@ -6,7 +6,7 @@ namespace WebRoutes.Services.Users;
 
 public interface IUserService
 {
-    Task<IEnumerable<UserInfoResponseDto>> GetAllUsersAsync();
+    Task<IEnumerable<UserInfoResponseDto>> GetAllUsersAsync(int pageNumber, int pageSize);
 
     Task<UserProfileResponseDto> GetUserProfileByIdAsync(int id);
         
@@ -14,5 +14,5 @@ public interface IUserService
         
     Task<HttpResponseMessage> UpdateUserAsync(int id, UserUpdateRequestDto userUpdateRequest);
         
-    Task DeleteUserAsync(int id);
+    Task<HttpResponseMessage> DeleteUserAsync(int id);
 }

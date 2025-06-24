@@ -81,7 +81,12 @@ public class RouteController : ControllerBase
     [HttpDelete("delete/{id}")]
     public async Task<ActionResult> DeleteRoute(int id)
     {
-        await _routeService.DeleteRouteAsync(id);
+        var response = await _routeService.DeleteRouteAsync(id);
+        if (!response.IsSuccessStatusCode)
+        {
+            return BadRequest("This route does not exist.");
+        }
+
         return NoContent();
     }
 }

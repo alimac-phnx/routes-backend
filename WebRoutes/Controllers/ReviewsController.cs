@@ -42,7 +42,12 @@ public class ReviewsController : ControllerBase
     [HttpDelete("delete/{id}")]
     public async Task<ActionResult> DeleteReview(int id)
     {
-        await _reviewService.DeleteReviewAsync(id);
+        var response = await _reviewService.DeleteReviewAsync(id);
+        if (!response.IsSuccessStatusCode)
+        {
+            return BadRequest("This review does not exist.");
+        }
+
         return NoContent();
     }
 }

@@ -19,9 +19,9 @@ public class UserService : IUserService
         _userCreatingService = userCreatingService;
     }
 
-    public async Task<IEnumerable<UserInfoResponseDto>> GetAllUsersAsync()
+    public async Task<IEnumerable<UserInfoResponseDto>> GetAllUsersAsync(int pageNumber, int pageSize)
     {
-        var users = await _userDataService.GetAllUsersAsync();
+        var users = await _userDataService.GetAllUsersAsync(pageNumber, pageSize);
         
         return _mapper.Map<IEnumerable<UserInfoResponseDto>>(users);
     }
@@ -61,11 +61,15 @@ public class UserService : IUserService
         return new HttpResponseMessage(HttpStatusCode.OK);
     }
 
-    public async Task DeleteUserAsync(int id)
+    public async Task<HttpResponseMessage> DeleteUserAsync(int id)
     {
-        if (await _userDataService.GetUserByIdAsync(id) != null)
+        if (await _userDataService.GetUserByIdAsync(id) == null)
         {
-            await _userDataService.DeleteUserAsync(id);
+            return new HttpResponseMessage(HttpStatusCode.BadRequest);
         }
+
+        await _userDataService.DeleteUserAsync(id);
+        
+        return new HttpResponseMessage(HttpStatusCode.NoContent);
     }
 }

@@ -27,7 +27,8 @@ public class RouteCreatingService : IRouteCreatingService
         SetImagesToRoutePlaces(routeCreateRequest, route);
         SetImagesToRouteAddtionalPlaces(routeCreateRequest, route);
 
-        var routeInfo = await _routeBuilder.BuildAsync(route.Places.ToList());
+        var routeInfo = await _routeBuilder.BuildAsync(
+            route.Places.ToList(), route.Type.ToString().ToLower());
         _routeMapper.MapInfo(route, routeInfo);
         
         route.Marks!.Add(new Mark

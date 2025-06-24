@@ -12,9 +12,9 @@ namespace WebRoutes.Services.Users.Implementation
             _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<IEnumerable<User>> GetAllUsersAsync(int pageNumber, int pageSize)
         { 
-            return await _userRepository.GetAllAsync();
+            return await _userRepository.GetWithPaginationAllAsync(pageNumber, pageSize);
         }
 
         public async Task<User?> GetUserByIdAsync(int id)

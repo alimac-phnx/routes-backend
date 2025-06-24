@@ -42,13 +42,16 @@ public class ReviewService : IReviewService
         return new HttpResponseMessage(HttpStatusCode.Created);
     }
     
-    public async Task DeleteReviewAsync(int id)
+    public async Task<HttpResponseMessage> DeleteReviewAsync(int id)
     {
         var review = await _reviewDataService.GetReviewByIdAsync(id);
-        
-        if (review != null)
+        if (review == null)
         {
-            await _reviewDataService.DeleteReviewAsync(review);
+            return new HttpResponseMessage(HttpStatusCode.BadRequest);
         }
+        
+        await _reviewDataService.DeleteReviewAsync(review);
+        
+        return new HttpResponseMessage(HttpStatusCode.NoContent);
     }
 }

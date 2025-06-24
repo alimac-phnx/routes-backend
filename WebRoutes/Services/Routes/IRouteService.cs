@@ -17,5 +17,5 @@ public interface IRouteService
         
     Task<HttpResponseMessage> UpdateRouteByRequestAsync(int id, RouteUpdateRequestDto routeUpdateRequest);
         
-    Task DeleteRouteAsync(int id);
+    Task<HttpResponseMessage> DeleteRouteAsync(int id);
 }

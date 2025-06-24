@@ -2,7 +2,7 @@
 
 public enum RouteType
 {
-    Walking,
-    Cycling,
-    Car
+    Walk,
+    Bicycle,
+    Drive
 }

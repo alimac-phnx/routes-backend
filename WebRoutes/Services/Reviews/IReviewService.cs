@@ -9,5 +9,5 @@ public interface IReviewService
     
     Task<HttpResponseMessage> CreateReviewAsync(ReviewCreateRequestDto reviewCreateRequest);
 
-    Task DeleteReviewAsync(int id);
+    Task<HttpResponseMessage> DeleteReviewAsync(int id);
 }

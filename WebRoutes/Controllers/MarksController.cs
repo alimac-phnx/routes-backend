@@ -33,7 +33,13 @@ public class MarksController : ControllerBase
     [HttpDelete("delete/{id}")]
     public async Task<ActionResult> DeleteMark(int id)
     {
-        await _markService.DeleteMarkAsync(id);
+        var response = await _markService.DeleteMarkAsync(id);
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            return BadRequest("This mark does not exist.");
+        }
+
         return NoContent();
     }
 }

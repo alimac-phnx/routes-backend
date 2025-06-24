@@ -39,7 +39,7 @@ internal class RouteService : IRouteService
     {
         var routes = await _routeDataService.GetAllRoutesForUserAsync(id, currentUserId, pageNumber, pageSize);
         
-        return _routeMapper.MapMarks(routes.ToList(), currentUserId, id);;
+        return _routeMapper.MapMarks(routes.ToList(), id, currentUserId);;
     }
 
     public async Task<RoutePostResponseDto> GetRouteByIdAsync(int id, int userId)
@@ -78,11 +78,15 @@ internal class RouteService : IRouteService
         return new HttpResponseMessage(HttpStatusCode.OK);
     }
 
-    public async Task DeleteRouteAsync(int id)
+    public async Task<HttpResponseMessage> DeleteRouteAsync(int id)
     {
-        if (await _routeDataService.GetRouteByIdAsync(id) != null)
+        if (await _routeDataService.GetRouteByIdAsync(id) == null)
         {
-            await _routeDataService.DeleteRouteAsync(id);
+            return new HttpResponseMessage(HttpStatusCode.BadRequest);
         }
+        
+        await _routeDataService.DeleteRouteAsync(id);
+        
+        return new HttpResponseMessage(HttpStatusCode.NoContent);
     }
 }
