@@ -20,9 +20,9 @@ namespace WebRoutes.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserInfoResponseDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserInfoResponseDto>>> GetUsers(int pageNumber = 1, int pageSize = 10)
         {
-            var users = await _userService.GetAllUsersAsync();
+            var users = await _userService.GetAllUsersAsync(pageNumber, pageSize);
             return Ok(users);
         }
 

@@ -8,6 +8,14 @@ namespace WebRoutes.Repositories.implementation
     {
         public UserRepository(ApplicationDbContext context) : base(context) { }
 
+        public async Task<IEnumerable<User>> GetWithPaginationAllAsync(int pageNumber, int pageSize)
+        {
+            return await _context.Users
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();;
+        }
+
         public async Task<User?> GetUserWithRoutesAsync(int id)
         {
             return await _context.Users

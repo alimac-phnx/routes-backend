@@ -9,7 +9,7 @@ public class RouteBuilder : IRouteBuilder
     
     public async Task<(List<Coordinate> coordinates, float distance, float time)> BuildAsync(List<Place> places, string mode)
     {
-        const string apiKey = "4694ebc07b654d96b095f84d490b17ef";
+        var apiKey = Environment.GetEnvironmentVariable("GEOPIFY_API_KEY");
         var points = places.Select(p => p.Point).ToList();
         var json = await CalculateRouteAsync(points, apiKey, mode);
 

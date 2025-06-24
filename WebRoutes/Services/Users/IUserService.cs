@@ -6,7 +6,7 @@ namespace WebRoutes.Services.Users;
 
 public interface IUserService
 {
-    Task<IEnumerable<UserInfoResponseDto>> GetAllUsersAsync();
+    Task<IEnumerable<UserInfoResponseDto>> GetAllUsersAsync(int pageNumber, int pageSize);
 
     Task<UserProfileResponseDto> GetUserProfileByIdAsync(int id);
         

@@ -4,7 +4,7 @@ namespace WebRoutes.Services.Users
 {
     public interface IUserDataService
     {
-        Task<IEnumerable<User>> GetAllUsersAsync();
+        Task<IEnumerable<User>> GetAllUsersAsync(int pageNumber, int pageSize);
         
         Task<User?> GetUserByIdAsync(int id);
         

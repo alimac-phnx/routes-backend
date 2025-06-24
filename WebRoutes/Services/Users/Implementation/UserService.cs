@@ -19,9 +19,9 @@ public class UserService : IUserService
         _userCreatingService = userCreatingService;
     }
 
-    public async Task<IEnumerable<UserInfoResponseDto>> GetAllUsersAsync()
+    public async Task<IEnumerable<UserInfoResponseDto>> GetAllUsersAsync(int pageNumber, int pageSize)
     {
-        var users = await _userDataService.GetAllUsersAsync();
+        var users = await _userDataService.GetAllUsersAsync(pageNumber, pageSize);
         
         return _mapper.Map<IEnumerable<UserInfoResponseDto>>(users);
     }
